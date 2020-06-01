@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/ivanov-da/FSD-slider/issues"
   },
-  "homepage": "https://github.com/ivanov-da/FSD-slider#readme"
+  "homepage": "https://github.com/ivanov-da/FSD-slider#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
 }
