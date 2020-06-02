@@ -1,1 +1,1 @@
-alert('hello');
+import '../slider/slider.js';
