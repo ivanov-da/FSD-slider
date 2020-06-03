@@ -3,14 +3,8 @@ import Observer from "../observer/observer";
 export default class Model {
 
   constructor() {
+    this.state = {};
     this.observerModel = new Observer();
-    this.state = {
-      min: 0,
-      max: 100,
-      value: 35,
-    };
-
-
   }
 
   getState() {
@@ -19,10 +13,7 @@ export default class Model {
 
   updateState(state) {
     this.state = state;
-  }
-
-  testMethod() {
-    this.observerModel.notifyObservers();
+    this.observerModel.notifyObservers(this);
   }
 
 }

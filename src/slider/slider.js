@@ -10,11 +10,11 @@ import Observer from './observer/observer.js';
     options = $.extend({
       direction: 'horizontal',
       type: 'single',
-      min: 10,
-      max: 100,
+      min: 0,
+      max: 10,
       valueFrom: null,
-      valueTo: 50,
-      step: 1,
+      valueTo: 0,
+      step: 2,
     }, options);
 
     let make = function () {
@@ -23,7 +23,8 @@ import Observer from './observer/observer.js';
       let model = new Model();
       let presenter = new Presenter(model, view, options);
 
-      view.init();
+      presenter.initSlider();
+      view.bindEventListeners();
     };
 
     return this.each(make);

@@ -34,7 +34,6 @@ export default class Observer {
     for (let i = 0, ilen = observersSnapshot.length; i < ilen; i += 1) {
       observersSnapshot[i](data);
     }
-    console.log('observersSnapshot', observersSnapshot)
   }
 
 }
