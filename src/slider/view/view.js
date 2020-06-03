@@ -1,48 +1,25 @@
-import Observer from "../observer/observer";
+import ViewLine from "./view-line";
+import ViewBar from "./view-bar";
+import ViewHandle from "./view-handle";
 
 export default class View {
 
-  constructor(model, routJQobj) {
-    let $slider = $(".slider");
-
-    this.model = model;
-
-    this.observerView = new Observer();
-
-    // Аналог view в процедурном типе
-    let template =
-      `<div class='fsd-slider'>` +
-      `<div class='fsd-slider__line'></div>` +
-      `<div class='fsd-slider__bar'></div>` +
-      `<div class='fsd-slider__handle'></div>` +
-      `</div>`;
-
-    $slider.html(template);
-
-    $(".fsd-slider__line").click(function () {
-      let positionX = model.value;
-      //let positionX = ((event.layerX - 8) / 500) * 100;
-      let out = "left: " + positionX + "%";
-      let outAnimate = positionX + "%";
-      //$(".fsd-slider__handle").attr("style", out);
-      $(".fsd-slider__handle").animate({
-        left: outAnimate
-      }, 500);
-    });
-
-
-    $(".fsd-slider__handle").click(function () {
-
-      model.testMethod();
-
-
-    });
-
+  constructor($routObj) {
+    this.template = `<div class='fsd-slider'></div>`;
+    this.container = $routObj;
   }
 
-  setState() {
-    this.state = this.model.getState();
-    console.log('value в view', this.state.value)
+  init() {
+    this.container.html(this.template);
+    this.$slider = this.container.find('.fsd-slider');
+
+    this.line = new ViewLine(this.$slider);
+    this.handle = new ViewHandle(this.$slider);
+    this.bar = new ViewBar(this.$slider);
+
+    this.line.init();
+    this.handle.init();
+    this.bar.init();
   }
 
 }
