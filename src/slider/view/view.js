@@ -1,9 +1,13 @@
+import Observer from "../observer/observer";
+
 export default class View {
 
-  constructor(model, presenter) {
+  constructor(model, routJQobj) {
     let $slider = $(".slider");
 
+    this.model = model;
 
+    this.observerView = new Observer();
 
     // Аналог view в процедурном типе
     let template =
@@ -28,16 +32,17 @@ export default class View {
 
 
     $(".fsd-slider__handle").click(function () {
+
       model.testMethod();
-      //console.log(presenter.state);
+
+
     });
 
   }
 
-  /* reCalculateValue() {
-    let pos = presenter.state.value + '%';
-    $(".fsd-slider__handle").animate({
-      left: outAnimate
-    }, 500);
-  } */
+  setState() {
+    this.state = this.model.getState();
+    console.log('value в view', this.state.value)
+  }
+
 }

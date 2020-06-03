@@ -7,7 +7,7 @@ export default class Model {
     this.state = {
       min: 0,
       max: 100,
-      value: 33,
+      value: 35,
     };
 
 
@@ -15,6 +15,10 @@ export default class Model {
 
   getState() {
     return this.state;
+  }
+
+  updateState(state) {
+    this.state = state;
   }
 
   testMethod() {

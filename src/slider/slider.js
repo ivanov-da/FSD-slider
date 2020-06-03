@@ -7,8 +7,8 @@ $(document).ready(function () {
   //let observer = new Observer();
 
   let model = new Model();
+  let view = new View(model);
   let presenter = new Presenter(model, view);
-  let view = new View(model, presenter);
 
 
 
