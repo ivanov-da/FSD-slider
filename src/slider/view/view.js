@@ -30,10 +30,6 @@ export default class View {
     this.$line = this.$slider.find('.fsd-slider__line');
     this.$bar = this.$slider.find('.fsd-slider__bar');
     this.$handle = this.$slider.find('.fsd-slider__handle');
-    this.renderHandle();
-    console.log("View -> init -> this.renderHandle", this.renderHandle)
-
-
 
   }
 
@@ -43,25 +39,33 @@ export default class View {
 
   updateView(state) {
     this.state = state;
-    console.log("View -> updateView -> this.state", this.state)
+    this.renderHandle();
+    console.log("View -> updateView -> this", this)
+    console.log("View -> updateView -> this.$handle", this.$handle)
+  }
 
+  getState() {
+    return this.state;
   }
 
   renderHandle() {
-    this.Handleposition = "left: " + this.state.valueTo + "%";
-    console.log("View -> renderHandle -> this.Handleposition", this.Handleposition)
-    console.log("View -> renderHandle -> this.$handle", this.$handle)
+    this.Handleposition = "left: " + (this.state.valueTo / 300 * 100) + "%";
     this.$handle.attr("style", this.Handleposition);
 
 
   }
 
   bindEventListeners() {
+    this.lineClick = this.lineClick.bind(this);
     this.$slider.click(this.lineClick);
   }
 
   lineClick() {
     console.log('позиция мыши по клику', event.layerX);
+    this.state.valueTo = event.layerX;
+    console.log("View -> lineClick -> this.state.valueTo", this.state.valueTo)
+    this.observerView.notifyObservers();
   }
+
 
 }

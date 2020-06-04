@@ -9,9 +9,10 @@ export default class Presenter {
   }
 
   initSlider() {
+    this.view.init();
     this.model.updateState(this.state);
     this.view.updateSettings(this.settings);
-    this.view.init();
+
   }
 
   subsrcibeToModel() {
@@ -19,8 +20,18 @@ export default class Presenter {
     this.model.observerModel.addObserver(this.updateView);
   }
 
+  subscribeToView() {
+    this.updateModel = this.updateModel.bind(this);
+    this.view.observerView.addObserver(this.updateModel);
+
+  }
+
   updateView(model) {
     this.view.updateView(model.getState());
+  }
+
+  updateModel() {
+    this.model.updateState(this.view.getState());
   }
 
 }

@@ -13,6 +13,8 @@ export default class Model {
 
   updateState(state) {
     this.state = state;
+    console.log("Model -> updateState -> this.state", this.state)
+
     this.observerModel.notifyObservers(this);
   }
 

@@ -24,6 +24,7 @@ import Observer from './observer/observer.js';
       let presenter = new Presenter(model, view, options);
 
       presenter.subsrcibeToModel();
+      presenter.subscribeToView();
       presenter.initSlider();
       view.bindEventListeners();
 
