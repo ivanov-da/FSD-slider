@@ -16,6 +16,7 @@ export default class View {
 
   init() {
     this.container.html(this.template);
+
     this.$slider = this.container.find('.fsd-slider');
 
     this.line = new ViewLine(this.$slider);
@@ -29,6 +30,10 @@ export default class View {
     this.$line = this.$slider.find('.fsd-slider__line');
     this.$bar = this.$slider.find('.fsd-slider__bar');
     this.$handle = this.$slider.find('.fsd-slider__handle');
+    this.renderHandle();
+    console.log("View -> init -> this.renderHandle", this.renderHandle)
+
+
 
   }
 
@@ -36,9 +41,18 @@ export default class View {
     this.settings = settings;
   }
 
-  updateState(state) {
+  updateView(state) {
     this.state = state;
-    console.log("View -> updateState -> this.state", this.state)
+    console.log("View -> updateView -> this.state", this.state)
+
+  }
+
+  renderHandle() {
+    this.Handleposition = "left: " + this.state.valueTo + "%";
+    console.log("View -> renderHandle -> this.Handleposition", this.Handleposition)
+    console.log("View -> renderHandle -> this.$handle", this.$handle)
+    this.$handle.attr("style", this.Handleposition);
+
 
   }
 

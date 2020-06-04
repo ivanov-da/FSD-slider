@@ -19,8 +19,8 @@ export default class Presenter {
     this.model.observerModel.addObserver(this.updateView);
   }
 
-  updateView() {
-    this.view.updateState(this.model.getState());
+  updateView(model) {
+    this.view.updateView(model.getState());
   }
 
 }

@@ -13,7 +13,7 @@ import Observer from './observer/observer.js';
       min: 0,
       max: 10,
       valueFrom: null,
-      valueTo: 0,
+      valueTo: 75,
       step: 2,
     }, options);
 
