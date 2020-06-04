@@ -23,8 +23,10 @@ import Observer from './observer/observer.js';
       let model = new Model();
       let presenter = new Presenter(model, view, options);
 
+      presenter.subsrcibeToModel();
       presenter.initSlider();
       view.bindEventListeners();
+
     };
 
     return this.each(make);

@@ -38,6 +38,8 @@ export default class View {
 
   updateState(state) {
     this.state = state;
+    console.log("View -> updateState -> this.state", this.state)
+
   }
 
   bindEventListeners() {
@@ -45,7 +47,7 @@ export default class View {
   }
 
   lineClick() {
-    console.log(event.layerX);
+    console.log('позиция мыши по клику', event.layerX);
   }
 
 }
