@@ -9,9 +9,10 @@ export default class Presenter {
   }
 
   initSlider() {
+    this.view.updateSettings(this.settings);
     this.view.init();
     this.model.updateState(this.state);
-    this.view.updateSettings(this.settings);
+
 
   }
 
