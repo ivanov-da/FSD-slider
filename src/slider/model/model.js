@@ -11,25 +11,6 @@ class Model {
     };
   }
 
-  init(config) {
-    this.data.type = this.validType(config.type);
-    this.data.step = this.validStep(config.step);
-    this.data.min = config.min;
-    this.data.max = config.max;
-    this.data.min = this.validMin(config.min);
-    this.data.max = this.validMax(config.max);
-    this.data.valueTo = this.validValueTo(config.valueTo);
-    this.data.valueFrom = this.validValueFrom(config.valueFrom);
-
-
-
-  }
-
-  update(updateParam) {
-    this.data[updateParam.parameter] = updateParam.value;
-    console.log("Model -> update -> this.data", this.data)
-  }
-
   validType(type) {
     if (type === 'single' || type === 'double') {
       return type;
@@ -152,6 +133,27 @@ class Model {
       return this.data.step;
     }
   }
+
+  init(config) {
+    this.data.type = this.validType(config.type);
+    this.data.step = this.validStep(config.step);
+    this.data.min = config.min;
+    this.data.max = config.max;
+    this.data.min = this.validMin(config.min);
+    this.data.max = this.validMax(config.max);
+    this.data.valueTo = this.validValueTo(config.valueTo);
+    this.data.valueFrom = this.validValueFrom(config.valueFrom);
+  }
+
+  update(updateParameter) {
+
+    switch (updateParameter.key) {
+      case 'type':
+        this.data.type = this.validType(updateParameter.value);
+        break;
+    }
+    // TODO Доделать обновление параметров и валидацию связанных величин
+  }
 }
 
 
@@ -165,17 +167,20 @@ let config = {
   valueTo: 0,
 };
 
-/* let updateParam = {
-  parameter: 'max',
-  value: 10.2,
-}; */
+let updateParam = {
+  key: 'type',
+  value: 'double',
+};
 
 
 
 let model = new Model();
+//console.log(model.data);
+//model.init(config);
+//console.log(model.data);
+model.update(updateParam);
 console.log(model.data);
-model.init(config);
-console.log(model.data);
+
 
 //console.log(model.validMax(100))
 //model.validValue(40.76)
