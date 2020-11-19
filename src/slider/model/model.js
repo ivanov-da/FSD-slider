@@ -1,6 +1,4 @@
-import Observer from "../observer/observer";
-
-export default class Model {
+class Model {
 
   constructor() {
     this.data = {
@@ -11,47 +9,179 @@ export default class Model {
       valueFrom: null,
       valueTo: 50,
     };
-    this.observerModel = new Observer();
   }
 
-  getData() {
-    return this.data;
+  init(config) {
+    this.data.type = this.validType(config.type);
+    this.data.step = this.validStep(config.step);
+    this.data.min = config.min;
+    this.data.max = config.max;
+    this.data.min = this.validMin(config.min);
+    this.data.max = this.validMax(config.max);
+    this.data.valueTo = this.validValueTo(config.valueTo);
+    this.data.valueFrom = this.validValueFrom(config.valueFrom);
+
+
+
   }
 
-  updateData(data) {
-    this.validMin(data);
-    this.validMax(data);
-    this.data.min = data.min;
-    this.data.max = data.max;
-
-    this.validType(data);
-    this.data.type = data.type;
-
-
-
-
-    notifyObservers(this);
+  update(updateParam) {
+    this.data[updateParam.parameter] = updateParam.value;
+    console.log("Model -> update -> this.data", this.data)
   }
 
-  validMin(data) {
-    if (data.min === undefined || data.min >= this.data.max) {
-      data.min = this.data.min;
+  validType(type) {
+    if (type === 'single' || type === 'double') {
+      return type;
+    } else {
+      return 'single';
+    }
+
+  }
+
+  validMin(min) {
+    if (typeof min === 'number') {
+      if (min < this.data.max) {
+        if (this.data.max - min < 2 * this.data.step) {
+          return this.data.max - 2 * this.data.step;
+        }
+
+        return min;
+      } else {
+        return this.data.min;
+      }
+    } else {
+      return this.data.min;
     }
   }
 
-  validMax(data) {
-    if (data.max === undefined || data.max <= this.data.min) {
-      data.max = this.data;
+  validMax(max) {
+    if (typeof max === 'number') {
+      if (max > this.data.min) {
+        if (max - this.data.min < 2 * this.data.step) {
+          return this.data.min + 2 * this.data.step;
+        }
+
+        return max;
+      } else {
+        return this.data.max;
+      }
+    } else {
+      return this.data.max;
     }
   }
 
-  validType(data) {
-    if (data.type !== 'single' || data.type !== 'double') {
-      data.type = 'single';
+  validValue(value) {
+    let stepsInValue = value / this.data.step;
+
+
+    if (stepsInValue % 1 >= 0.5) {
+      value = this.data.step * Math.ceil(stepsInValue);
+
+    } else {
+      value = this.data.step * Math.floor(stepsInValue);
+
+    }
+
+    if (Number.isInteger(value)) {
+
+      return value;
+    } else {
+
+      return value.toFixed(1);
+
     }
   }
 
-  validStep(data) {
-    
+  validValueTo(valueTo) {
+    if (typeof valueTo === 'number') {
+      valueTo = this.validValue(valueTo);
+    } else {
+      valueTo = this.data.valueTo;
+    }
+
+    if (this.data.type === 'single') {
+
+      if (valueTo > this.data.max) {
+        valueTo = this.data.max;
+      } else if (valueTo < this.data.min) {
+        valueTo = this.data.min;
+      }
+
+    } else if (this.data.type === 'double') {
+      if (valueTo > this.data.max) {
+        valueTo = this.data.max;
+      } else if (valueTo <= this.data.valueFrom) {
+        valueTo = this.data.valueFrom + this.data.step;
+      } else if (valueTo < this.data.min) {
+        valueTo = this.data.min;
+      }
+    }
+    return valueTo;
+  }
+
+  validValueFrom(valueFrom) {
+    if (typeof valueFrom === 'number') {
+      valueFrom = this.validValue(valueFrom);
+    } else {
+      valueFrom = this.data.valueFrom;
+    }
+
+    if (this.data.type === 'single') {
+      valueFrom = null;
+
+    } else if (this.data.type === 'double') {
+      if (valueFrom < this.data.min) {
+        valueFrom = this.data.min;
+      } else if (valueFrom >= this.data.valueTo) {
+        valueFrom = this.data.valueTo - this.data.step;
+      }
+    }
+
+    return valueFrom;
+  }
+
+  validStep(step) {
+    if (typeof step === 'number') {
+      if (step > 0) {
+        return step;
+      } else {
+        return this.data.step;
+      }
+    } else {
+      return this.data.step;
+    }
   }
 }
+
+
+
+let config = {
+  min: 200,
+  max: 400,
+  step: 1,
+  type: 'single',
+  valueFrom: 300,
+  valueTo: 0,
+};
+
+/* let updateParam = {
+  parameter: 'max',
+  value: 10.2,
+}; */
+
+
+
+let model = new Model();
+console.log(model.data);
+model.init(config);
+console.log(model.data);
+
+//console.log(model.validMax(100))
+//model.validValue(40.76)
+//model.update(updateParam);
+
+//console.log(model.validValue('eou'))
+
+//model.validType('double&')
+//console.log("model.validMin(7);", model.validMin(9500))
