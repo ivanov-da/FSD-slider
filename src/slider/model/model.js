@@ -146,13 +146,37 @@ class Model {
   }
 
   update(updateParameter) {
-
     switch (updateParameter.key) {
       case 'type':
+        if (updateParameter.key === 'double' && this.data.type === 'single') {
+          this.data.valueFrom = this.data.min;
+        }
+
         this.data.type = this.validType(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        break;
+      case 'step':
+        this.data.step = this.validStep(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        break;
+      case 'min':
+        this.data.min = this.validMin(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        break;
+      case 'max':
+        this.data.max = this.validMax(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        break;
+      case 'valueFrom':
+        this.data.valueFrom = this.validValueFrom(updateParameter.value);
+        break;
+      case 'valueTo':
+        this.data.valueTo = this.validValueTo(updateParameter.value);
         break;
     }
-    // TODO Доделать обновление параметров и валидацию связанных величин
   }
 }
 
@@ -163,8 +187,8 @@ let config = {
   max: 400,
   step: 1,
   type: 'single',
-  valueFrom: 300,
-  valueTo: 0,
+  valueFrom: 250,
+  valueTo: 300,
 };
 
 let updateParam = {
@@ -174,9 +198,10 @@ let updateParam = {
 
 
 
+
 let model = new Model();
 //console.log(model.data);
-//model.init(config);
+model.init(config);
 //console.log(model.data);
 model.update(updateParam);
 console.log(model.data);
