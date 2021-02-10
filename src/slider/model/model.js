@@ -1,4 +1,4 @@
-class Model {
+export default class Model {
 
   constructor() {
     this.data = {
@@ -179,39 +179,3 @@ class Model {
     }
   }
 }
-
-
-
-let config = {
-  min: 200,
-  max: 400,
-  step: 1,
-  type: 'single',
-  valueFrom: 250,
-  valueTo: 300,
-};
-
-let updateParam = {
-  key: 'type',
-  value: 'double',
-};
-
-
-
-
-let model = new Model();
-//console.log(model.data);
-model.init(config);
-//console.log(model.data);
-model.update(updateParam);
-console.log(model.data);
-
-
-//console.log(model.validMax(100))
-//model.validValue(40.76)
-//model.update(updateParam);
-
-//console.log(model.validValue('eou'))
-
-//model.validType('double&')
-//console.log("model.validMin(7);", model.validMin(9500))
