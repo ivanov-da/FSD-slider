@@ -1,4 +1,4 @@
-class Model {
+export default class Model {
 
   constructor() {
     this.data = {
@@ -9,25 +9,6 @@ class Model {
       valueFrom: null,
       valueTo: 50,
     };
-  }
-
-  init(config) {
-    this.data.type = this.validType(config.type);
-    this.data.step = this.validStep(config.step);
-    this.data.min = config.min;
-    this.data.max = config.max;
-    this.data.min = this.validMin(config.min);
-    this.data.max = this.validMax(config.max);
-    this.data.valueTo = this.validValueTo(config.valueTo);
-    this.data.valueFrom = this.validValueFrom(config.valueFrom);
-
-
-
-  }
-
-  update(updateParam) {
-    this.data[updateParam.parameter] = updateParam.value;
-    console.log("Model -> update -> this.data", this.data)
   }
 
   validType(type) {
@@ -152,36 +133,49 @@ class Model {
       return this.data.step;
     }
   }
+
+  init(config) {
+    this.data.type = this.validType(config.type);
+    this.data.step = this.validStep(config.step);
+    this.data.min = config.min;
+    this.data.max = config.max;
+    this.data.min = this.validMin(config.min);
+    this.data.max = this.validMax(config.max);
+    this.data.valueTo = this.validValueTo(config.valueTo);
+    this.data.valueFrom = this.validValueFrom(config.valueFrom);
+  }
+
+  update(updateParameter) {
+    switch (updateParameter.key) {
+      case 'type':
+        if (updateParameter.key === 'double' && this.data.type === 'single') {
+          this.data.valueFrom = this.data.min;
+        }
+
+        this.data.type = this.validType(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        break;
+      case 'step':
+        this.data.step = this.validStep(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        break;
+      case 'min':
+        this.data.min = this.validMin(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        break;
+      case 'max':
+        this.data.max = this.validMax(updateParameter.value);
+        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        break;
+      case 'valueFrom':
+        this.data.valueFrom = this.validValueFrom(updateParameter.value);
+        break;
+      case 'valueTo':
+        this.data.valueTo = this.validValueTo(updateParameter.value);
+        break;
+    }
+  }
 }
-
-
-
-let config = {
-  min: 200,
-  max: 400,
-  step: 1,
-  type: 'single',
-  valueFrom: 300,
-  valueTo: 0,
-};
-
-/* let updateParam = {
-  parameter: 'max',
-  value: 10.2,
-}; */
-
-
-
-let model = new Model();
-console.log(model.data);
-model.init(config);
-console.log(model.data);
-
-//console.log(model.validMax(100))
-//model.validValue(40.76)
-//model.update(updateParam);
-
-//console.log(model.validValue('eou'))
-
-//model.validType('double&')
-//console.log("model.validMin(7);", model.validMin(9500))
