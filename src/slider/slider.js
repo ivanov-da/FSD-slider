@@ -24,17 +24,20 @@ import Observer from './observer/observer.js'; */
       
       line.addEventListener('click', event => {
         const coordinates = line.getBoundingClientRect();
-        let handleWidth = handle.getBoundingClientRect().width / 2 / coordinates.width * 100;
+        let halfHandleWidthPercent = handle.getBoundingClientRect().width / 2 / coordinates.width * 100;
         let newPosition = (event.clientX - coordinates.x) / coordinates.width;
-        let newPositionStyle = newPosition * 100 - handleWidth;
+        let newPositionStyle = newPosition * 100 - halfHandleWidthPercent;
         handle.style.left = newPositionStyle + '%';
       });
 
-      handle.onmousdown = function (event) {
+      handle.onmousedown = function (event) {
         event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
         const coordinates = line.getBoundingClientRect();
-        let shiftX = (event.clientX - coordinates.x) - handle.getBoundingClientRect().left;
+        let halfHandleCorrection = handle.getBoundingClientRect().width / 2 / coordinates.width;
+        console.log("🚀 ~ file: slider.js ~ line 38 ~ make ~ halfHandleCorrection", halfHandleCorrection)
+        
+        let shift = event.clientX  - handle.getBoundingClientRect().left;
         
 
         document.addEventListener('mousemove', onMouseMove);
@@ -42,19 +45,23 @@ import Observer from './observer/observer.js'; */
         
 
         function onMouseMove(event) {
-          let newPosition = event.clientX - shiftX - coordinates.left;
+          let newPosition = (event.clientX - shift - coordinates.left) / coordinates.width;
+          
   
           // курсор вышел из слайдера => оставить бегунок в его границах.
-          if (newPosition < 0) {
-            newPosition = 0;
+          if (newPosition < 0 - halfHandleCorrection) {
+            newPosition = -halfHandleCorrection;
           }
 
-          let rightEdge = coordinates.offsetWidth - handle.offsetWidth;
-          if (newPosition > rightEdge) {
-            newPosition = rightEdge;
+          if (newPosition > 1 - halfHandleCorrection) {
+            newPosition = 1 - halfHandleCorrection;
           }
   
-          handle.style.left = newPosition + 'px';
+          handle.style.left = newPosition * 100+ '%';
+          console.log("🚀 ~ file: slider.js ~ line 61 ~ onMouseMove ~ handle.style.left", handle.style.left)
+
+          
+          
         }
 
         function onMouseUp() {
