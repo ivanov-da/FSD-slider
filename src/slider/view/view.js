@@ -1,23 +1,30 @@
+/* import Observer from "../observer/observer"; */
 import ViewLine from "./view-line";
-import ViewBar from "./view-bar";
-import ViewHandle from "./view-handle";
-import Observer from "../observer/observer";
+/* import ViewHandle from "view-handle";
+import ViewBar from "view-bar"; */
 
 export default class View {
 
-  constructor($routObj) {
-    this.state = {};
-    this.settings = {};
+  constructor(root) {
     this.template = `<div class='fsd-slider'></div>`;
-    this.container = $routObj;
-    this.observerView = new Observer();
-
+    this.root = root;
+    /* this.line = new ViewLine() */
   }
 
   init() {
+    this.root.innerHTML = this.template;
+    this.container = this.root.querySelector('.fsd-slider');
+    this.line = new ViewLine(this.container);
+    
+    
+  }
+
+/*   init() {
     this.container.html(this.template);
+    console.log("🚀 ~ file: view.js ~ line 20 ~ View ~ /*init ~ this.container", this.container)
 
     this.$slider = this.container.find('.fsd-slider');
+    console.log("🚀 ~ file: view.js ~ line 23 ~ View ~ /*init ~ this.container", this.container)
 
     this.line = new ViewLine(this.$slider);
     this.handle = new ViewHandle(this.$slider);
@@ -65,7 +72,7 @@ export default class View {
     this.state.valueTo = event.layerX;
     console.log("View -> lineClick -> this.state.valueTo", this.state.valueTo)
     this.observerView.notifyObservers();
-  }
+  } */
 
 
 }

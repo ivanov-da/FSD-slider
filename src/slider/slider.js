@@ -1,5 +1,5 @@
 import Model from './model/model';
-/* import View from './view/view.js'; */
+import View from './view/view.js';
 /* import Presenter from './presenter/presenter.js'; */
 /* import Observer from './observer/observer.js'; */
 
@@ -20,9 +20,14 @@ import Model from './model/model';
 
     let make = function () {
 
+
       let model = new Model();
+      console.log("🚀 ~ file: slider.js ~ line 24 ~ make ~ model", model)
       model.init(options);
-      model.getState();
+
+      let view = new View(this);
+      view.init();
+      console.log("🚀 ~ file: slider.js ~ line 37 ~ make ~ this", this);
 
       // привязка вида
       const line = document.querySelector('.fsd-slider__line');
@@ -31,6 +36,7 @@ import Model from './model/model';
 
       // click on line
       line.addEventListener('click', event => {
+      
         console.log("🚀 ~ file: slider.js ~ line 34 ~ make ~ model.getState()", model.getState())
         const coordinates = line.getBoundingClientRect();
         let halfHandleWidthPercent = handle.getBoundingClientRect().width / 2 / coordinates.width * 100;

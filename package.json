@@ -24,6 +24,7 @@
     "sass": "^1.26.7"
   },
   "dependencies": {
-    "jquery": "^3.5.1"
+    "jquery": "^3.5.1",
+    "view-line": "^1.0.0"
   }
 }
