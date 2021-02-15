@@ -1,17 +1,25 @@
-export default class Model {
+import Observer from "../observer/observer";
+
+export default class Model extends Observer {
 
   constructor() {
-    this.data = {
-      min: 0,
-      max: 100,
-      step: 1,
-      type: 'single',
-      valueFrom: null,
-      valueTo: 50,
-    };
+    super();
+    this.state = {};
   }
 
-  validType(type) {
+  init(options) {
+    Object.assign(this.state, options);
+  }
+
+  getState() {
+    return this.state;
+  }
+
+  changeProperty(property) {
+    this.state[property.name] = property.value;
+  }
+
+/*   validType(type) {
     if (type === 'single' || type === 'double') {
       return type;
     } else {
@@ -177,5 +185,5 @@ export default class Model {
         this.data.valueTo = this.validValueTo(updateParameter.value);
         break;
     }
-  }
+  } */
 }
