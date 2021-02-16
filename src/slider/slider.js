@@ -33,18 +33,6 @@ import View from './view/view.js';
       const line = document.querySelector('.fsd-slider__line');
       const handle = document.querySelector('.fsd-slider__handle');
 
-
-      // click on line
-      line.addEventListener('click', event => {
-      
-        console.log("🚀 ~ file: slider.js ~ line 34 ~ make ~ model.getState()", model.getState())
-        const coordinates = line.getBoundingClientRect();
-        let halfHandleWidthPercent = handle.getBoundingClientRect().width / 2 / coordinates.width * 100;
-        let newPosition = (event.clientX - coordinates.x) / coordinates.width;
-        let newPositionStyle = newPosition * 100 - halfHandleWidthPercent;
-        handle.style.left = newPositionStyle + '%';
-      });
-
       // drug'n'drop
       handle.onmousedown = function (event) {
         event.preventDefault(); // предотвратить запуск выделения (действие браузера)

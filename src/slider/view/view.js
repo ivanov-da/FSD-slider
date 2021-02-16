@@ -1,11 +1,12 @@
-/* import Observer from "../observer/observer"; */
-import ViewLine from "./view-line";
-import ViewHandle from "./view-handle";
+import Observer from "../observer/observer";
 import ViewBar from "./view-bar";
+import ViewHandle from "./view-handle";
+import ViewLine from "./view-line";
 
-export default class View {
+export default class View extends Observer {
 
   constructor(root) {
+    super();
     this.template = `<div class='fsd-slider'></div>`;
     this.root = root;
     this.line = new ViewLine(this.root);
@@ -14,18 +15,30 @@ export default class View {
   init() {
     this.root.innerHTML = this.template;
     this.container = this.root.querySelector('.fsd-slider');
-    
+
     this.line = new ViewLine(this.container);
     this.handle = new ViewHandle(this.container);
     this.bar = new ViewBar(this.container);
-    
     
     this.line.init();
     this.handle.init();
     this.bar.init();
 
+
     
+
+    this.line.element.onclick = this.onLineClick.bind(this);
     
+  }
+
+  onLineClick (event) {
+    const lineWidth = this.line.getWidth();
+    const lineLeftCoordinate = this.line.getLeftCoordinate();
+    const handleWidth = this.handle.getWidth();
+    const halfHandleWidthPercentage = handleWidth / 2 / lineWidth * 100;
+    const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth * 100 - halfHandleWidthPercentage;
+  
+    this.handle.setPosition(newPosition);
   }
 
 /*   init() {

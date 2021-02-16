@@ -6,6 +6,14 @@ export default class ViewHandle {
 
   init() {
     this.root.insertAdjacentHTML('beforeend', this.template);
-    
+    this.element = this.root.querySelector('.fsd-slider__handle');
+  }
+
+  getWidth() {
+    return this.element.getBoundingClientRect().width;
+  }
+  
+  setPosition(position) {
+    this.element.style.left = position + '%';
   }
 }

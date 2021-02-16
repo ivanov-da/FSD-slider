@@ -5,6 +5,15 @@ export default class ViewLine {
   }
 
   init() {
-    this.root.insertAdjacentHTML("beforeend", this.template);
+    this.root.insertAdjacentHTML('beforeend', this.template);
+    this.element = this.root.querySelector('.fsd-slider__line');
+  }
+
+  getWidth() {
+    return this.element.getBoundingClientRect().width;
+  }
+
+  getLeftCoordinate() {
+    return this.element.getBoundingClientRect().left;
   }
 }
