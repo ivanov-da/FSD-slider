@@ -1,20 +1,29 @@
 /* import Observer from "../observer/observer"; */
 import ViewLine from "./view-line";
-/* import ViewHandle from "view-handle";
-import ViewBar from "view-bar"; */
+import ViewHandle from "./view-handle";
+import ViewBar from "./view-bar";
 
 export default class View {
 
   constructor(root) {
     this.template = `<div class='fsd-slider'></div>`;
     this.root = root;
-    /* this.line = new ViewLine() */
+    this.line = new ViewLine(this.root);
   }
 
   init() {
     this.root.innerHTML = this.template;
     this.container = this.root.querySelector('.fsd-slider');
+    
     this.line = new ViewLine(this.container);
+    this.handle = new ViewHandle(this.container);
+    this.bar = new ViewBar(this.container);
+    
+    
+    this.line.init();
+    this.handle.init();
+    this.bar.init();
+
     
     
   }

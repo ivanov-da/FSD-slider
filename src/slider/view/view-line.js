@@ -1,10 +1,10 @@
 export default class ViewLine {
-  constructor(routObj) {
-/*     this.$slider = routObj;
-    this.template = `<div class='fsd-slider__line'></div>`; */
+  constructor(root) {
+    this.root = root;
+    this.template = `<div class='fsd-slider__line'></div>`;
   }
 
   init() {
-/*     this.$slider.append(this.template); */
+    this.root.insertAdjacentHTML("beforeend", this.template);
   }
 }

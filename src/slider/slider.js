@@ -27,7 +27,7 @@ import View from './view/view.js';
 
       let view = new View(this);
       view.init();
-      console.log("🚀 ~ file: slider.js ~ line 37 ~ make ~ this", this);
+      
 
       // привязка вида
       const line = document.querySelector('.fsd-slider__line');
