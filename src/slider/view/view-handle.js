@@ -12,6 +12,10 @@ export default class ViewHandle {
   getWidth() {
     return this.element.getBoundingClientRect().width;
   }
+
+  getLeftCoordinate() {
+    return this.element.getBoundingClientRect().left;
+  }
   
   setPosition(position) {
     this.element.style.left = position + '%';

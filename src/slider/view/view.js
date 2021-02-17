@@ -24,10 +24,9 @@ export default class View extends Observer {
     this.handle.init();
     this.bar.init();
 
-
-    
-
     this.line.element.onclick = this.onLineClick.bind(this);
+    this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
+    this.handle.ondragstart = () => false;
     
   }
 
@@ -40,6 +39,47 @@ export default class View extends Observer {
   
     this.handle.setPosition(newPosition);
   }
+
+  onHandleMouseDown(event) {
+    event.preventDefault(); // предотвратить запуск выделения (действие браузера)
+
+    const lineWidth = this.line.getWidth();
+    const lineLeftCoordinate = this.line.getLeftCoordinate();
+    const handleWidth = this.handle.getWidth();
+    const handleLeftCoordinate = this.handle.getLeftCoordinate();
+    const halfHandleWidth = handleWidth / 2 / lineWidth;
+    const shift = event.clientX - handleLeftCoordinate;
+
+    let onMouseUp = onHandleMouseMove.bind(this);
+
+    document.addEventListener('mousemove', onMouseUp);
+    document.addEventListener('mouseup', onHandleMouseUp);
+
+    function onHandleMouseMove(event) {
+      console.log(this)
+    
+      let newPosition = (event.clientX - shift - lineLeftCoordinate ) / lineWidth;
+      
+      if (newPosition < 0 - halfHandleWidth) {
+        newPosition = -halfHandleWidth;
+      }
+  
+      if (newPosition > 1 - halfHandleWidth) {
+        newPosition = 1 - halfHandleWidth;
+      }
+  
+      this.handle.setPosition(newPosition * 100);
+
+    }
+
+    function onHandleMouseUp() {
+      document.removeEventListener('mouseup', onHandleMouseUp);
+      document.removeEventListener('mousemove', onMouseUp);
+    }
+
+  }
+
+
 
 /*   init() {
     this.container.html(this.template);
