@@ -1,6 +1,6 @@
 import Model from './model/model';
 import View from './view/view.js';
-/* import Presenter from './presenter/presenter.js'; */
+import Presenter from './presenter/presenter.js';
 /* import Observer from './observer/observer.js'; */
 
 (function ($) {
@@ -8,7 +8,7 @@ import View from './view/view.js';
     options = $.extend({
       direction: 'horizontal',
       type: 'single',
-      min: 0,
+      min: -100,
       max: 100,
       valueFrom: null,
       valueTo: 50,
@@ -22,11 +22,15 @@ import View from './view/view.js';
 
 
       let model = new Model();
-      console.log("🚀 ~ file: slider.js ~ line 24 ~ make ~ model", model)
-      model.init(options);
-
       let view = new View(this);
+      let presenter = new Presenter(model, view);
+      console.log("🚀 ~ file: slider.js ~ line 27 ~ make ~ presenter", presenter)
+      
+      model.init(options);
       view.init();
+
+      view.addObserver(presenter.updateModel.bind(model));
+      
       
 
       // привязка вида

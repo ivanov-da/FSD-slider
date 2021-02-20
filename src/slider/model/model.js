@@ -16,7 +16,12 @@ export default class Model extends Observer {
   }
 
   changeProperty(property) {
-    this.state[property.name] = property.value;
+    this.state[property.name] = this.calcValue(property.value);
+    console.log("🚀 ~ file: model.js ~ line 20 ~ Model ~ changeProperty ~ this.state[property.name]", this.state[property.name])
+  }
+
+  calcValue(value) {
+    return this.state.min + (this.state.max - this.state.min) * value;
   }
 
 /*   validType(type) {
