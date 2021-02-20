@@ -6,17 +6,21 @@ export default class Presenter {
 
   }
 
-
-
-
-
-
-  updateView(model) {
-    /* this.view.updateView(model.getState()); */
+  init() {
+    this.view.addObserver(this.updateModel.bind(this.model));
+    this.model.addObserver(this.updateView.bind(this.view));
   }
+
+
+
+
 
   updateModel(property) {
     this.changeProperty(property);
+  }
+
+  updateView(property) {
+    this.setHandlePosition(property.value);
     
   }
 

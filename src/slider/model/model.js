@@ -17,11 +17,23 @@ export default class Model extends Observer {
 
   changeProperty(property) {
     this.state[property.name] = this.calcValue(property.value);
-    console.log("🚀 ~ file: model.js ~ line 20 ~ Model ~ changeProperty ~ this.state[property.name]", this.state[property.name])
+    
+    let valueRelative = this.getValueRelative(this.state[property.name])
+    console.log("🚀 ~ file: model.js ~ line 24 ~ Model ~ changeProperty ~ this.state[property.name]", this.state[property.name])
+    console.log("🚀 ~ file: model.js ~ line 22 ~ Model ~ changeProperty ~ valueRelative", valueRelative)
+    this.notifyObservers({
+    
+      name: [property.name],
+      value: valueRelative,
+    })
   }
 
   calcValue(value) {
     return this.state.min + (this.state.max - this.state.min) * value;
+  }
+
+  getValueRelative(value) {
+    return (value - this.state.min) / (this.state.max - this.state.min);
   }
 
 /*   validType(type) {

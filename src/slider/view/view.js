@@ -25,8 +25,8 @@ export default class View extends Observer {
     this.bar.init();
 
     this.line.element.onclick = this.onLineClick.bind(this);
-    this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
-    this.handle.ondragstart = () => false;
+ /*    this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
+    this.handle.ondragstart = () => false; */
     
   }
 
@@ -48,7 +48,7 @@ export default class View extends Observer {
     
   }
 
-  onHandleMouseDown(event) {
+/*   onHandleMouseDown(event) {
     
     event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
@@ -83,5 +83,20 @@ export default class View extends Observer {
       document.removeEventListener('mouseup', onHandleMouseUp);
       document.removeEventListener('mousemove', onMouseUp);
     }
+  } */
+
+  setHandlePosition(position) {
+
+    let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+    position = position - halfHandleWidthRelative;
+
+    if (position < 0 - halfHandleWidthRelative) {
+      position = -halfHandleWidthRelative;
+    }
+    if (position > 1 - halfHandleWidthRelative) {
+      position = 1 - halfHandleWidthRelative;
+    }
+    
+    this.handle.setPosition(position);
   }
 }

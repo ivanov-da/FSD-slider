@@ -18,6 +18,6 @@ export default class ViewHandle {
   }
   
   setPosition(position) {
-    this.element.style.left = position + '%';
+    this.element.style.left = position * 100 + '%';
   }
 }

@@ -24,12 +24,12 @@ import Presenter from './presenter/presenter.js';
       let model = new Model();
       let view = new View(this);
       let presenter = new Presenter(model, view);
-      console.log("🚀 ~ file: slider.js ~ line 27 ~ make ~ presenter", presenter)
       
       model.init(options);
       view.init();
+      presenter.init();
 
-      view.addObserver(presenter.updateModel.bind(model));
+      
       
       
 
