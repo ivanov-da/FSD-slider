@@ -1,7 +1,6 @@
 import Model from './model/model';
-import View from './view/view.js';
-import Presenter from './presenter/presenter.js';
-/* import Observer from './observer/observer.js'; */
+import View from './view/view';
+import Presenter from './presenter/presenter';
 
 (function ($) {
   jQuery.fn.fsdSlider = function (options) {
@@ -29,13 +28,6 @@ import Presenter from './presenter/presenter.js';
       view.init();
       presenter.init();
 
-      
-      
-      
-
-      // привязка вида
-      const line = document.querySelector('.fsd-slider__line');
-      const handle = document.querySelector('.fsd-slider__handle');
     };
 
 

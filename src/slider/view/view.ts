@@ -4,6 +4,7 @@ import ViewHandle from "./view-handle";
 import ViewLine from "./view-line";
 
 export default class View extends Observer {
+  line: any;
 
   constructor(root) {
     super();

@@ -1,4 +1,4 @@
-import '../slider/slider.js';
+import '../slider/slider.ts';
 
 $(document).ready(function () {
   $(".test-slider1").fsdSlider();
