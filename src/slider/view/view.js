@@ -25,8 +25,8 @@ export default class View extends Observer {
     this.bar.init();
 
     this.line.element.onclick = this.onLineClick.bind(this);
- /*    this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
-    this.handle.ondragstart = () => false; */
+    this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
+    this.handle.ondragstart = () => false;
     
   }
 
@@ -36,11 +36,8 @@ export default class View extends Observer {
     const handleWidth = this.handle.getWidth();
     const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
 
-    // курсор поправка на половину ширины handle  перенести в перерисовку
-    /* const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth - halfHandleWidthRelative; */
     const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth;
-  
-    /* this.handle.setPosition(newPosition); */
+    
     this.notifyObservers({
       name: 'valueTo',
       value: newPosition,
@@ -48,15 +45,14 @@ export default class View extends Observer {
     
   }
 
-/*   onHandleMouseDown(event) {
+  onHandleMouseDown(event) {
     
     event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
     const lineWidth = this.line.getWidth();
     const lineLeftCoordinate = this.line.getLeftCoordinate();
-    const handleWidth = this.handle.getWidth();
     const handleLeftCoordinate = this.handle.getLeftCoordinate();
-    const halfHandleWidth = handleWidth / 2 / lineWidth;
+    const halfHandleWidth = this.handle.getWidth() / 2;
     const shift = event.clientX - handleLeftCoordinate;
 
     let onMouseUp = onHandleMouseMove.bind(this);
@@ -64,26 +60,20 @@ export default class View extends Observer {
     document.addEventListener('mousemove', onMouseUp);
     document.addEventListener('mouseup', onHandleMouseUp);
     
-
     function onHandleMouseMove(event) {
-      let newPosition = (event.clientX - shift - lineLeftCoordinate ) / lineWidth;
+      let newPosition = (event.clientX - shift - lineLeftCoordinate + halfHandleWidth ) / lineWidth;
       
-      if (newPosition < 0 - halfHandleWidth) {
-        newPosition = -halfHandleWidth;
-      }
-      if (newPosition > 1 - halfHandleWidth) {
-        newPosition = 1 - halfHandleWidth;
-      }
-  
-      this.handle.setPosition(newPosition * 100);
-
+      this.notifyObservers({
+        name: 'valueTo',
+        value: newPosition,
+      });
     }
 
     function onHandleMouseUp() {
       document.removeEventListener('mouseup', onHandleMouseUp);
       document.removeEventListener('mousemove', onMouseUp);
     }
-  } */
+  }
 
   setHandlePosition(position) {
 
