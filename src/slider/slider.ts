@@ -3,33 +3,47 @@ import View from './view/view';
 import Presenter from './presenter/presenter';
 
 (function ($) {
-  jQuery.fn.fsdSlider = function (options) {
-    options = $.extend({
-      direction: 'horizontal',
-      type: 'single',
-      min: -100,
-      max: 100,
-      valueFrom: null,
-      valueTo: 50,
-      step: 1,
-    }, options);
 
-
-
-
-    let make = function () {
-
+  let methods = {
+    init : function( options ) {
+      let settings = $.extend({
+        direction: 'horizontal',
+        type: 'single',
+        min: 0,
+        max: 100,
+        valueFrom: null,
+        valueTo: 50,
+        step: 1,
+      }, options);
 
       let model = new Model();
-      let view = new View(this);
+      let view = new View(this[0]);
       let presenter = new Presenter(model, view);
       
-      model.init(options);
+      model.init(settings);
       view.init();
       presenter.init();
+    },
 
-    };
+    update : function( content ) {
+      console.log(content)
+    }
+  };
 
+  $.fn.tooltip = function( method ) {
+    
+    // логика вызова метода
+
+  };
+
+  $.fn.fsdSlider = function (method) {
+    if ( methods[method] ) {
+      return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else if ( typeof method === 'object' || ! method ) {
+      return methods.init.apply( this, arguments );
+    } else {
+      $.error( 'Метод с именем ' +  method + ' не существует для jQuery.tooltip' );
+    } 
 
     return this.each(make);
   };
