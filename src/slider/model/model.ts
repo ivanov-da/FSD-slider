@@ -1,6 +1,6 @@
 import Observer from "../observer/observer";
 
-export default class Model extends Observer {
+export default class Model extends Observer{
 
   constructor() {
     super();
@@ -19,8 +19,7 @@ export default class Model extends Observer {
     this.state[property.name] = this.calcValue(property.value);
     
     let valueRelative = this.getValueRelative(this.state[property.name])
-    console.log("🚀 ~ file: model.js ~ line 24 ~ Model ~ changeProperty ~ this.state[property.name]", this.state[property.name])
-    console.log("🚀 ~ file: model.js ~ line 22 ~ Model ~ changeProperty ~ valueRelative", valueRelative)
+
     this.notifyObservers({
     
       name: [property.name],
@@ -36,56 +35,47 @@ export default class Model extends Observer {
     return (value - this.state.min) / (this.state.max - this.state.min);
   }
 
-/*   validType(type) {
+  validType(type) {
     if (type === 'single' || type === 'double') {
       return type;
     } else {
       return 'single';
     }
+  }
 
+  validDirection(direction) {
+    if (direction === 'horizontal' || direction === 'vertical') {
+      return direction;
+    } else {
+      return 'horizontal';
+    }
   }
 
   validMin(min) {
-    if (typeof min === 'number') {
-      if (min < this.data.max) {
-        if (this.data.max - min < 2 * this.data.step) {
-          return this.data.max - 2 * this.data.step;
-        }
-
-        return min;
-      } else {
-        return this.data.min;
-      }
+    if (typeof min === 'number' || min >= this.state.max) {
+      return min;
     } else {
-      return this.data.min;
+      return this.state.min;
     }
   }
 
   validMax(max) {
-    if (typeof max === 'number') {
-      if (max > this.data.min) {
-        if (max - this.data.min < 2 * this.data.step) {
-          return this.data.min + 2 * this.data.step;
-        }
-
-        return max;
-      } else {
-        return this.data.max;
-      }
+    if (typeof max === 'number' || max <= this.state.min) {
+      return max;;
     } else {
-      return this.data.max;
+      return this.state.max;
     }
   }
 
   validValue(value) {
-    let stepsInValue = value / this.data.step;
+    let stepsInValue = value / this.state.step;
 
 
     if (stepsInValue % 1 >= 0.5) {
-      value = this.data.step * Math.ceil(stepsInValue);
+      value = this.state.step * Math.ceil(stepsInValue);
 
     } else {
-      value = this.data.step * Math.floor(stepsInValue);
+      value = this.state.step * Math.floor(stepsInValue);
 
     }
 
@@ -103,24 +93,22 @@ export default class Model extends Observer {
     if (typeof valueTo === 'number') {
       valueTo = this.validValue(valueTo);
     } else {
-      valueTo = this.data.valueTo;
+      valueTo = this.state.valueTo;
     }
 
-    if (this.data.type === 'single') {
+    if (this.state.type === 'single') {
 
-      if (valueTo > this.data.max) {
-        valueTo = this.data.max;
-      } else if (valueTo < this.data.min) {
-        valueTo = this.data.min;
+      if (valueTo > this.state.max) {
+        valueTo = this.state.max;
+      } else if (valueTo < this.state.min) {
+        valueTo = this.state.min;
       }
 
-    } else if (this.data.type === 'double') {
-      if (valueTo > this.data.max) {
-        valueTo = this.data.max;
-      } else if (valueTo <= this.data.valueFrom) {
-        valueTo = this.data.valueFrom + this.data.step;
-      } else if (valueTo < this.data.min) {
-        valueTo = this.data.min;
+    } else if (this.state.type === 'double') {
+      if (valueTo > this.state.max) {
+        valueTo = this.state.max;
+      } else if (valueTo <= this.state.valueFrom) {
+        valueTo = this.state.valueFrom + this.state.step;
       }
     }
     return valueTo;
@@ -130,17 +118,17 @@ export default class Model extends Observer {
     if (typeof valueFrom === 'number') {
       valueFrom = this.validValue(valueFrom);
     } else {
-      valueFrom = this.data.valueFrom;
+      valueFrom = this.state.valueFrom;
     }
 
-    if (this.data.type === 'single') {
+    if (this.state.type === 'single') {
       valueFrom = null;
 
-    } else if (this.data.type === 'double') {
-      if (valueFrom < this.data.min) {
-        valueFrom = this.data.min;
-      } else if (valueFrom >= this.data.valueTo) {
-        valueFrom = this.data.valueTo - this.data.step;
+    } else if (this.state.type === 'double') {
+      if (valueFrom < this.state.min) {
+        valueFrom = this.state.min;
+      } else if (valueFrom >= this.state.valueTo) {
+        valueFrom = this.state.valueTo - this.state.step;
       }
     }
 
@@ -152,54 +140,45 @@ export default class Model extends Observer {
       if (step > 0) {
         return step;
       } else {
-        return this.data.step;
+        return this.state.step;
       }
     } else {
-      return this.data.step;
+      return this.state.step;
     }
   }
 
-  init(config) {
-    this.data.type = this.validType(config.type);
-    this.data.step = this.validStep(config.step);
-    this.data.min = config.min;
-    this.data.max = config.max;
-    this.data.min = this.validMin(config.min);
-    this.data.max = this.validMax(config.max);
-    this.data.valueTo = this.validValueTo(config.valueTo);
-    this.data.valueFrom = this.validValueFrom(config.valueFrom);
-  }
 
-  update(updateParameter) {
+
+/*   update(updateParameter) {
     switch (updateParameter.key) {
       case 'type':
-        if (updateParameter.key === 'double' && this.data.type === 'single') {
-          this.data.valueFrom = this.data.min;
+        if (updateParameter.key === 'double' && this.state.type === 'single') {
+          this.state.valueFrom = this.state.min;
         }
 
-        this.data.type = this.validType(updateParameter.value);
-        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
+        this.state.type = this.validType(updateParameter.value);
+        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
         break;
       case 'step':
-        this.data.step = this.validStep(updateParameter.value);
-        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
-        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        this.state.step = this.validStep(updateParameter.value);
+        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
+        this.state.valueTo = this.validValueTo(this.state.valueTo);
         break;
       case 'min':
-        this.data.min = this.validMin(updateParameter.value);
-        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
-        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        this.state.min = this.validMin(updateParameter.value);
+        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
+        this.state.valueTo = this.validValueTo(this.state.valueTo);
         break;
       case 'max':
-        this.data.max = this.validMax(updateParameter.value);
-        this.data.valueFrom = this.validValueFrom(this.data.valueFrom);
-        this.data.valueTo = this.validValueTo(this.data.valueTo);
+        this.state.max = this.validMax(updateParameter.value);
+        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
+        this.state.valueTo = this.validValueTo(this.state.valueTo);
         break;
       case 'valueFrom':
-        this.data.valueFrom = this.validValueFrom(updateParameter.value);
+        this.state.valueFrom = this.validValueFrom(updateParameter.value);
         break;
       case 'valueTo':
-        this.data.valueTo = this.validValueTo(updateParameter.value);
+        this.state.valueTo = this.validValueTo(updateParameter.value);
         break;
     }
   } */
