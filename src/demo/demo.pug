@@ -10,10 +10,13 @@ html
     script(src='./demo.ts')
   body
     .container
-      br
-      .test-slider1
-      br
-      .fsd-slider2
-      br
-      #test-slider
+      .slider-demo
+        .slider__container
+          .slider-one
+        .panel
+          label.slider-one__type
+            span Тип слайдера
+            input.slider-one__radio(type='radio' name='sliderOneType' value='horizontal')
+            input.slider-one__radio(type='radio' name='sliderOneType' value='vertical')
+
 

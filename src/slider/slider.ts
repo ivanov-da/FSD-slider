@@ -1,6 +1,7 @@
 import Model from './model/model';
 import View from './view/view';
 import Presenter from './presenter/presenter';
+import presenter from './presenter/presenter';
 
 (function ($) {
 
@@ -26,7 +27,8 @@ import Presenter from './presenter/presenter';
     },
 
     update : function( content ) {
-      console.log(content)
+      console.log(content);
+
     }
   };
 
