@@ -1,10 +1,12 @@
 export default class ViewHandle {
-  constructor(root) {
+  constructor(root, direction) {
     this.root = root;
-    this.template = `<div class='fsd-slider__handle'></div>`;
+    this.direction = direction;
+    
   }
 
   init() {
+    this.template =`<div class='fsd-slider__handle'></div>`;
     this.root.insertAdjacentHTML('beforeend', this.template);
     this.element = this.root.querySelector('.fsd-slider__handle');
   }
@@ -18,6 +20,10 @@ export default class ViewHandle {
   }
   
   setPosition(position) {
-    this.element.style.left = position * 100 + '%';
+    if (this.direction === 'horizontal') {
+      this.element.style.left = position * 100 + '%';
+    } else {
+      this.element.style.top = position * 100 + '%';
+    }
   }
 }

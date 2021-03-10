@@ -8,7 +8,7 @@ import presenter from './presenter/presenter';
   let methods = {
     init : function( options ) {
       let settings = $.extend({
-        direction: 'horizontal',
+        direction: 'vertical',
         type: 'single',
         min: 0,
         max: 100,
@@ -22,7 +22,7 @@ import presenter from './presenter/presenter';
       let presenter = new Presenter(model, view);
       
       model.init(settings);
-      view.init();
+      view.init(model.state);
       presenter.init();
     },
 

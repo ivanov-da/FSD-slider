@@ -8,18 +8,25 @@ export default class View extends Observer {
 
   constructor(root) {
     super();
-    this.template = `<div class='fsd-slider'></div>`;
+    this.state = {};
     this.root = root;
-    this.line = new ViewLine(this.root);
   }
 
-  init() {
+  init(options) {
+    Object.assign(this.state, options);
+
+    this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider__vertical';
+
+
+    this.template = '<div class=' + `'${this.sliderClass}'` + '></div>';
+
+
     this.root.innerHTML = this.template;
     this.container = this.root.querySelector('.fsd-slider');
 
-    this.line = new ViewLine(this.container);
-    this.handle = new ViewHandle(this.container);
-    this.bar = new ViewBar(this.container);
+    this.line = new ViewLine(this.container, this.state.direction);
+    this.handle = new ViewHandle(this.container, this.state.direction);
+    this.bar = new ViewBar(this.container, this.state.direction);
     
     this.line.init();
     this.handle.init();

@@ -1,10 +1,11 @@
 export default class ViewLine {
-  constructor(root) {
+  constructor(root, direction) {
     this.root = root;
-    this.template = `<div class='fsd-slider__line'></div>`;
+    this.direction = direction;
   }
 
   init() {
+    this.template = this.direction === 'horizontal' ? `<div class='fsd-slider__line'></div>` : `<div class='fsd-slider__line fsd-slider__line_vertical'></div>`;
     this.root.insertAdjacentHTML('beforeend', this.template);
     this.element = this.root.querySelector('.fsd-slider__line');
   }
