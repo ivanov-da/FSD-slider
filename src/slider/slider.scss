@@ -1,5 +1,10 @@
 .fsd-slider {
   position: relative;
+  width: 100%;
+
+  &_vertical {
+    height: 100%;
+  }
 
 
   &__bar,
@@ -8,11 +13,17 @@
   }
 
   &__line {
+    width: 100%;
     height: 6px;
     background: #FFFFFF;
     border: 1px solid rgba(31, 32, 65, 0.25);
     box-sizing: border-box;
     border-radius: 3px;
+
+    &_vertical {
+      width: 6px;
+      height: 100%;
+    }
   }
 
   &__bar {}
@@ -23,8 +34,15 @@
     background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
     border: 2px solid #FFFFFF;
     border-radius: 10px;
-
     top: -5px;
     left: 50%;
+
+  }
+
+  &__animation {
+    -webkit-transition: left 0.4s ease;
+    -moz-transition: left 0.4s ease;
+    -o-transition: left 0.4s ease;
+    transition: left 0.4s ease; 
   }
 }

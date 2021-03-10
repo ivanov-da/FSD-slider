@@ -6,12 +6,17 @@ html
     meta(name='description' content='demo')
     title Demo page
     link(rel='stylesheet' href='./demo.scss')
-    script(src='./jquery-for-parcel.js')
-    script(src='./demo.js')
+    script(src='./jquery-for-parcel.ts')
+    script(src='./demo.ts')
   body
     .container
-      .fsd-slider
-        .fsd-slider__bar
-        .fsd-slider__handle
-        .fsd-slider__line
+      .slider-demo
+        .slider__container
+          .slider-one
+        .panel
+          label.slider-one__type
+            span Тип слайдера
+            input.slider-one__radio(type='radio' name='sliderOneType' value='horizontal')
+            input.slider-one__radio(type='radio' name='sliderOneType' value='vertical')
+
 

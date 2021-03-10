@@ -1,10 +1,10 @@
 export default class ViewBar {
-  constructor(routObj) {
-    this.$slider = routObj;
+  constructor(root) {
+    this.root = root;
     this.template = `<div class='fsd-slider__bar'></div>`;
   }
 
   init() {
-    this.$slider.append(this.template);
+    this.root.insertAdjacentHTML("beforeend", this.template);
   }
 }
