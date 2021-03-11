@@ -25,11 +25,16 @@ export default class View extends Observer {
     this.container = this.root.querySelector('.fsd-slider');
 
     this.line = new ViewLine(this.container, this.state.direction);
-    this.handle = new ViewHandle(this.container, this.state.direction);
-    this.bar = new ViewBar(this.container, this.state.direction);
-    
     this.line.init();
+
+    this.handle = new ViewHandle(this.container, this.state.direction);
     this.handle.init();
+
+    if (this.state.type === 'double') {
+      this.handleTo = new ViewHandle(this.container, this.state.direction);
+      this.handleTo.init();
+    }
+    this.bar = new ViewBar(this.container, this.state.direction);
     this.bar.init();
 
     this.line.element.onclick = this.onLineClick.bind(this);
@@ -39,12 +44,24 @@ export default class View extends Observer {
   }
 
   onLineClick (event) {
-    const lineWidth = this.line.getWidth();
-    const lineLeftCoordinate = this.line.getLeftCoordinate();
     const handleWidth = this.handle.getWidth();
-    const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
+    
 
-    const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth;
+    if (this.state.direction === 'horizontal') {
+      
+      const lineWidth = this.line.getWidth();
+      const lineLeftCoordinate = this.line.getLeftCoordinate();
+      
+      const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
+      const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth;
+    } else {
+      const lineHeight = this.line.getHeight();
+      const lineTopCoordinate = this.line.getTopCoordinate();
+      const halfHandleWidthRelative = handleWidth / 2 / lineHeight;
+      const newPosition = (event.clientY - lineTopCoordinate) / lineHeight;
+      
+    }
+    
     
     this.notifyObservers({
       name: 'valueTo',
@@ -56,12 +73,23 @@ export default class View extends Observer {
   onHandleMouseDown(event) {
     
     event.preventDefault(); // предотвратить запуск выделения (действие браузера)
-
-    const lineWidth = this.line.getWidth();
-    const lineLeftCoordinate = this.line.getLeftCoordinate();
-    const handleLeftCoordinate = this.handle.getLeftCoordinate();
     const halfHandleWidth = this.handle.getWidth() / 2;
-    const shift = event.clientX - handleLeftCoordinate;
+
+    if (this.state.direction === 'horizontal') {
+      
+      const lineWidth = this.line.getWidth();
+      const lineLeftCoordinate = this.line.getLeftCoordinate();
+      const handleLeftCoordinate = this.handle.getLeftCoordinate();
+      const shift = event.clientX - handleLeftCoordinate;
+      
+    } else {
+
+      const lineHeight = this.line.getHeight();
+      const lineTopCoordinate = this.line.getTopCoordinate();
+      const handleTopCoordinate = this.handle.getTopCoordinate();
+      const shift = event.clientY - handleTopCoordinate;
+      
+    }
 
     let onMouseUp = onHandleMouseMove.bind(this);
 
@@ -69,7 +97,32 @@ export default class View extends Observer {
     document.addEventListener('mouseup', onHandleMouseUp);
     
     function onHandleMouseMove(event) {
-      let newPosition = (event.clientX - shift - lineLeftCoordinate + halfHandleWidth ) / lineWidth;
+      let newPosition;
+
+      if (this.state.direction === 'horizontal') {
+      
+        newPosition = (event.clientX - shift - lineLeftCoordinate + halfHandleWidth ) / lineWidth;
+        
+        
+      } else {
+  
+        newPosition = (event.clientY - shift - lineTopCoordinate + halfHandleWidth ) / lineHeight;
+        
+      }
+
+      if (this.state.direction === 'horizontal') {
+        let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+      } else {
+        let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
+      }
+      
+      newPosition = newPosition > 1 ?  1 : newPosition;
+      newPosition = newPosition < 0 ?  0 : newPosition;
+      
+  
+
+      
+      console.log("🚀 ~ file: view.ts ~ line 99 ~ View ~ onHandleMouseMove ~ newPosition", newPosition)
       
       this.notifyObservers({
         name: 'valueTo',
@@ -85,7 +138,12 @@ export default class View extends Observer {
 
   setHandlePosition(position) {
 
-    let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+    if (this.state.direction === 'horizontal') {
+      let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+    } else {
+      let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
+    }
+    
     position = position - halfHandleWidthRelative;
 
     if (position < 0 - halfHandleWidthRelative) {

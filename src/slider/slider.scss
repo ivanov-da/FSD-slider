@@ -19,6 +19,7 @@
     border: 1px solid rgba(31, 32, 65, 0.25);
     box-sizing: border-box;
     border-radius: 3px;
+    cursor: pointer;
 
     &_vertical {
       width: 6px;
@@ -36,6 +37,12 @@
     border-radius: 10px;
     top: -5px;
     left: 50%;
+    cursor: pointer;
+
+    &_vertical {
+      top: 50%;
+      left: -5px;
+    }
 
   }
 

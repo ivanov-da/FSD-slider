@@ -18,10 +18,11 @@ export default class Model extends Observer{
   changeProperty(property) {
     this.state[property.name] = this.calcValue(property.value);
     
-    let valueRelative = this.getValueRelative(this.state[property.name])
+    let valueRelative = this.getValueRelative(this.state[property.name]);
+
+    console.log("🚀 ~ file: model.ts ~ line 26 ~ Model ~ changeProperty ~ this.state.valueTo", this.state.valueTo)
 
     this.notifyObservers({
-    
       name: [property.name],
       value: valueRelative,
     })
