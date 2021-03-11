@@ -11,7 +11,7 @@ import presenter from './presenter/presenter';
         direction: 'vertical',
         type: 'single',
         min: 0,
-        max: 100,
+        max: 10000,
         valueFrom: null,
         valueTo: 50,
         step: 1,

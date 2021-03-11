@@ -6,7 +6,7 @@ export default class ViewHandle {
   }
 
   init() {
-    this.template =`<div class='fsd-slider__handle'></div>`;
+    this.template = this.direction === 'horizontal' ? `<div class='fsd-slider__handle'></div>` : `<div class='fsd-slider__handle fsd-slider__handle_vertical'></div>`;
     this.root.insertAdjacentHTML('beforeend', this.template);
     this.element = this.root.querySelector('.fsd-slider__handle');
   }

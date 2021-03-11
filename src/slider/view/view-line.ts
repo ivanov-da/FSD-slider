@@ -17,4 +17,12 @@ export default class ViewLine {
   getLeftCoordinate() {
     return this.element.getBoundingClientRect().left;
   }
+
+  getHeight() {
+    return this.element.getBoundingClientRect().height;
+  }
+
+  getTopCoordinate() {
+    return this.element.getBoundingClientRect().top;
+  }
 }

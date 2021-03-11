@@ -39,12 +39,24 @@ export default class View extends Observer {
   }
 
   onLineClick (event) {
-    const lineWidth = this.line.getWidth();
-    const lineLeftCoordinate = this.line.getLeftCoordinate();
     const handleWidth = this.handle.getWidth();
-    const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
+    
 
-    const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth;
+    if (this.state.direction === 'horizontal') {
+      
+      const lineWidth = this.line.getWidth();
+      const lineLeftCoordinate = this.line.getLeftCoordinate();
+      
+      const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
+      const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth;
+    } else {
+      const lineHeight = this.line.getHeight();
+      const lineTopCoordinate = this.line.getTopCoordinate();
+      const halfHandleWidthRelative = handleWidth / 2 / lineHeight;
+      const newPosition = (event.clientY - lineTopCoordinate) / lineHeight;
+      
+    }
+    
     
     this.notifyObservers({
       name: 'valueTo',
@@ -85,7 +97,12 @@ export default class View extends Observer {
 
   setHandlePosition(position) {
 
-    let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+    if (this.state.direction === 'horizontal') {
+      let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+    } else {
+      let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
+    }
+    
     position = position - halfHandleWidthRelative;
 
     if (position < 0 - halfHandleWidthRelative) {
