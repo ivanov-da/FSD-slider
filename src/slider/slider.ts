@@ -9,7 +9,7 @@ import presenter from './presenter/presenter';
     init : function( options ) {
       let settings = $.extend({
         direction: 'vertical',
-        type: 'single',
+        type: 'double',
         min: 0,
         max: 10000,
         valueFrom: null,

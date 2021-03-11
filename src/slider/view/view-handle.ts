@@ -18,6 +18,10 @@ export default class ViewHandle {
   getLeftCoordinate() {
     return this.element.getBoundingClientRect().left;
   }
+
+  getTopCoordinate() {
+    return this.element.getBoundingClientRect().top;
+  }
   
   setPosition(position) {
     if (this.direction === 'horizontal') {
