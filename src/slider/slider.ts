@@ -8,11 +8,11 @@ import presenter from './presenter/presenter';
   let methods = {
     init : function( options ) {
       let settings = $.extend({
-        direction: 'vertical',
+        direction: 'horizontal',
         type: 'double',
         min: 0,
-        max: 10000,
-        valueFrom: null,
+        max: 100,
+        valueFrom: 0,
         valueTo: 50,
         step: 1,
       }, options);

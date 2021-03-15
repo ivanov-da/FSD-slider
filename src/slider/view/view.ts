@@ -14,6 +14,7 @@ export default class View extends Observer {
 
   init(options) {
     Object.assign(this.state, options);
+    console.log(this)
 
     this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider__vertical';
 
@@ -28,12 +29,15 @@ export default class View extends Observer {
     this.line.init();
 
     this.handle = new ViewHandle(this.container, this.state.direction);
-    this.handle.init();
+    let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
+    this.handle.init(handleStartPosition, this.line.getWidth());
 
     if (this.state.type === 'double') {
-      this.handleTo = new ViewHandle(this.container, this.state.direction);
-      this.handleTo.init();
+      this.handleFrom = new ViewHandle(this.container, this.state.direction);
+      let handleFromStartPosition = this.calcHandleStartPosition(this.state.valueFrom);
+      this.handleFrom.init(handleFromStartPosition, this.line.getWidth());
     }
+
     this.bar = new ViewBar(this.container, this.state.direction);
     this.bar.init();
 
@@ -41,6 +45,10 @@ export default class View extends Observer {
     this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
     this.handle.ondragstart = () => false;
     
+  }
+
+  calcHandleStartPosition(value: number): number {
+    return (value - this.state.min) / (this.state.max - this.state.min);
   }
 
   onLineClick (event) {
