@@ -14,7 +14,7 @@ export default class View extends Observer {
 
   init(options) {
     Object.assign(this.state, options);
-    console.log(this)
+    
 
     this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider__vertical';
 
@@ -28,14 +28,28 @@ export default class View extends Observer {
     this.line = new ViewLine(this.container, this.state.direction);
     this.line.init();
 
+    const lineLength;
+    if (this.state.direction === 'horizontal') {
+      lineLength = this.line.getWidth();
+    } else {
+      lineLength = this.line.getHeight();
+    }
+
     this.handle = new ViewHandle(this.container, this.state.direction);
     let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
-    this.handle.init(handleStartPosition, this.line.getWidth());
+
+
+    this.handle.init(handleStartPosition, lineLength);
 
     if (this.state.type === 'double') {
       this.handleFrom = new ViewHandle(this.container, this.state.direction);
       let handleFromStartPosition = this.calcHandleStartPosition(this.state.valueFrom);
-      this.handleFrom.init(handleFromStartPosition, this.line.getWidth());
+      this.handleFrom.init(handleFromStartPosition, lineLength);
+
+      this.handleFrom.element.setAttribute('data-handle-from', true);
+
+      this.handleFrom.element.onmousedown = this.onHandleMouseDown.bind(this);
+      this.handleFrom.ondragstart = () => false;
     }
 
     this.bar = new ViewBar(this.container, this.state.direction);
@@ -66,30 +80,35 @@ export default class View extends Observer {
 
   onHandleMouseDown(event) {
     
-    console.log("🚀 ~ file: view.ts ~ line 73 ~ View ~ onHandleMouseDown ~ event", event)
     event.preventDefault(); // предотвратить запуск выделения (действие браузера)
     const halfHandleWidth = this.handle.getWidth() / 2;
+
+    let updatedHandle = event.target.hasAttribute('data-handle-from') ? 'valueFrom' : 'valueTo';
+    
+
+
+
 
     if (this.state.direction === 'horizontal') {
     
       
       const lineWidth = this.line.getWidth();
       const lineLeftCoordinate = this.line.getLeftCoordinate();
-      const handleLeftCoordinate = this.handle.getLeftCoordinate();
+      const handleLeftCoordinate = event.target.getBoundingClientRect().left;
       const shift = event.clientX - handleLeftCoordinate;
       
     } else {
 
       const lineHeight = this.line.getHeight();
       const lineTopCoordinate = this.line.getTopCoordinate();
-      const handleTopCoordinate = this.handle.getTopCoordinate();
+      const handleTopCoordinate = event.target.getBoundingClientRect().top;
       const shift = event.clientY - handleTopCoordinate;
       
     }
 
-    let onMouseUp = onHandleMouseMove.bind(this);
+    let onMouseMove = onHandleMouseMove.bind(this);
 
-    document.addEventListener('mousemove', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onHandleMouseUp);
     
     function onHandleMouseMove(event) {
@@ -106,29 +125,30 @@ export default class View extends Observer {
         
       }
 
-      if (this.state.direction === 'horizontal') {
-        let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
-      } else {
-        let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
-      }
+      
       
       newPosition = newPosition > 1 ?  1 : newPosition;
       newPosition = newPosition < 0 ?  0 : newPosition;
       
-  
+      
+      
 
       
-      console.log("🚀 ~ file: view.ts ~ line 99 ~ View ~ onHandleMouseMove ~ newPosition", newPosition)
+      
+      
+      
       
       this.notifyObservers({
-        name: 'valueTo',
+        name: updatedHandle,
         value: newPosition,
       });
     }
+      
+      
 
     function onHandleMouseUp() {
       document.removeEventListener('mouseup', onHandleMouseUp);
-      document.removeEventListener('mousemove', onMouseUp);
+      document.removeEventListener('mousemove', onMouseMove);
     }
   }
 
@@ -157,6 +177,7 @@ export default class View extends Observer {
   }
 
   update(data) {
+    console.log("🚀 ~ file: view.ts ~ line 173 ~ View ~ update ~ data", data)
     switch (data.name) {
       case 'valueTo':
         if (this.state.direction === 'horizontal') {

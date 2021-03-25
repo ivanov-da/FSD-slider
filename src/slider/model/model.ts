@@ -16,6 +16,7 @@ export default class Model extends Observer{
   }
 
   changeProperty(property) {
+    
     let updatedProperty;
     let updatedValue
 
@@ -34,12 +35,23 @@ export default class Model extends Observer{
         }
 
         this.state[updatedProperty] = updatedValue;
-        console.log(this.state)
         
         
-
         break;
       
+      case 'valueFrom':
+        updatedProperty = 'valueFrom';
+        updatedValue = this.calcValue(property.value);
+        this.state[property.name] = updatedValue;
+
+        break;
+
+      case 'valueTo':
+        updatedProperty = 'valueTo';
+        updatedValue = this.calcValue(property.value);
+        this.state[property.name] = updatedValue;  
+        break;
+
       default:
         /* this.state[property.name] = this.calcValue(property.value); */
         break;
@@ -47,13 +59,13 @@ export default class Model extends Observer{
     
     
     
-
     
 
     this.notifyObservers({
       name: updatedProperty,
       state: this.state,
     })
+      
   }
 
   calcValue(value) {
