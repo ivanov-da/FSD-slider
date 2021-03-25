@@ -14,6 +14,7 @@ export default class View extends Observer {
 
   init(options) {
     Object.assign(this.state, options);
+    
 
     this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider__vertical';
 
@@ -27,13 +28,30 @@ export default class View extends Observer {
     this.line = new ViewLine(this.container, this.state.direction);
     this.line.init();
 
+    const lineLength;
+    if (this.state.direction === 'horizontal') {
+      lineLength = this.line.getWidth();
+    } else {
+      lineLength = this.line.getHeight();
+    }
+
     this.handle = new ViewHandle(this.container, this.state.direction);
-    this.handle.init();
+    let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
+
+
+    this.handle.init(handleStartPosition, lineLength);
 
     if (this.state.type === 'double') {
-      this.handleTo = new ViewHandle(this.container, this.state.direction);
-      this.handleTo.init();
+      this.handleFrom = new ViewHandle(this.container, this.state.direction);
+      let handleFromStartPosition = this.calcHandleStartPosition(this.state.valueFrom);
+      this.handleFrom.init(handleFromStartPosition, lineLength);
+
+      this.handleFrom.element.setAttribute('data-handle-from', true);
+
+      this.handleFrom.element.onmousedown = this.onHandleMouseDown.bind(this);
+      this.handleFrom.ondragstart = () => false;
     }
+
     this.bar = new ViewBar(this.container, this.state.direction);
     this.bar.init();
 
@@ -43,29 +61,19 @@ export default class View extends Observer {
     
   }
 
+  calcHandleStartPosition(value: number): number {
+    return (value - this.state.min) / (this.state.max - this.state.min);
+  }
+
   onLineClick (event) {
-    const handleWidth = this.handle.getWidth();
+
+    let newPositionRelative = this.calcLineClickPositionRelative(event);
+    console.log("🚀 ~ file: view.ts ~ line 57 ~ View ~ onLineClick ~ newPositionRelative", newPositionRelative)
     
 
-    if (this.state.direction === 'horizontal') {
-      
-      const lineWidth = this.line.getWidth();
-      const lineLeftCoordinate = this.line.getLeftCoordinate();
-      
-      const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
-      const newPosition = (event.clientX - lineLeftCoordinate) / lineWidth;
-    } else {
-      const lineHeight = this.line.getHeight();
-      const lineTopCoordinate = this.line.getTopCoordinate();
-      const halfHandleWidthRelative = handleWidth / 2 / lineHeight;
-      const newPosition = (event.clientY - lineTopCoordinate) / lineHeight;
-      
-    }
-    
-    
     this.notifyObservers({
-      name: 'valueTo',
-      value: newPosition,
+      name: 'value',
+      value: newPositionRelative,
     });
     
   }
@@ -75,25 +83,32 @@ export default class View extends Observer {
     event.preventDefault(); // предотвратить запуск выделения (действие браузера)
     const halfHandleWidth = this.handle.getWidth() / 2;
 
+    let updatedHandle = event.target.hasAttribute('data-handle-from') ? 'valueFrom' : 'valueTo';
+    
+
+
+
+
     if (this.state.direction === 'horizontal') {
+    
       
       const lineWidth = this.line.getWidth();
       const lineLeftCoordinate = this.line.getLeftCoordinate();
-      const handleLeftCoordinate = this.handle.getLeftCoordinate();
+      const handleLeftCoordinate = event.target.getBoundingClientRect().left;
       const shift = event.clientX - handleLeftCoordinate;
       
     } else {
 
       const lineHeight = this.line.getHeight();
       const lineTopCoordinate = this.line.getTopCoordinate();
-      const handleTopCoordinate = this.handle.getTopCoordinate();
+      const handleTopCoordinate = event.target.getBoundingClientRect().top;
       const shift = event.clientY - handleTopCoordinate;
       
     }
 
-    let onMouseUp = onHandleMouseMove.bind(this);
+    let onMouseMove = onHandleMouseMove.bind(this);
 
-    document.addEventListener('mousemove', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onHandleMouseUp);
     
     function onHandleMouseMove(event) {
@@ -110,49 +125,107 @@ export default class View extends Observer {
         
       }
 
-      if (this.state.direction === 'horizontal') {
-        let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
-      } else {
-        let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
-      }
+      
       
       newPosition = newPosition > 1 ?  1 : newPosition;
       newPosition = newPosition < 0 ?  0 : newPosition;
       
-  
+      
+      
 
       
-      console.log("🚀 ~ file: view.ts ~ line 99 ~ View ~ onHandleMouseMove ~ newPosition", newPosition)
+      
+      
+      
       
       this.notifyObservers({
-        name: 'valueTo',
+        name: updatedHandle,
         value: newPosition,
       });
     }
+      
+      
 
     function onHandleMouseUp() {
       document.removeEventListener('mouseup', onHandleMouseUp);
-      document.removeEventListener('mousemove', onMouseUp);
+      document.removeEventListener('mousemove', onMouseMove);
     }
   }
 
-  setHandlePosition(position) {
+  calcLineClickPositionRelative(event) {
+    const handleWidth = this.handle.getWidth();
+    
 
     if (this.state.direction === 'horizontal') {
-      let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+      
+      const lineWidth = this.line.getWidth();
+      const lineLeftCoordinate = this.line.getLeftCoordinate();
+      
+      const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
+      const newPositionRelative = (event.clientX - lineLeftCoordinate) / lineWidth;
     } else {
-      let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
+      const lineHeight = this.line.getHeight();
+      const lineTopCoordinate = this.line.getTopCoordinate();
+      const halfHandleWidthRelative = handleWidth / 2 / lineHeight;
+      const newPositionRelative = (event.clientY - lineTopCoordinate) / lineHeight;
     }
-    
-    position = position - halfHandleWidthRelative;
 
-    if (position < 0 - halfHandleWidthRelative) {
-      position = -halfHandleWidthRelative;
-    }
-    if (position > 1 - halfHandleWidthRelative) {
-      position = 1 - halfHandleWidthRelative;
-    }
-    
-    this.handle.setPosition(position);
+    newPositionRelative = newPositionRelative > 1 ?  1 : newPositionRelative;
+    newPositionRelative = newPositionRelative < 0 ?  0 : newPositionRelative;
+
+    return newPositionRelative;
   }
+
+  update(data) {
+    console.log("🚀 ~ file: view.ts ~ line 173 ~ View ~ update ~ data", data)
+    switch (data.name) {
+      case 'valueTo':
+        if (this.state.direction === 'horizontal') {
+          let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
+        } else {
+          let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
+        }
+        
+        let position = this.getValueRelative(data.state.valueTo, data.state.min, data.state.max);
+        position -= halfHandleWidthRelative;
+    
+        if (position < 0 - halfHandleWidthRelative) {
+          position = -halfHandleWidthRelative;
+        }
+        if (position > 1 - halfHandleWidthRelative) {
+          position = 1 - halfHandleWidthRelative;
+        }
+        
+        this.handle.setPosition(position);
+
+        break;
+
+      case 'valueFrom':
+        if (this.state.direction === 'horizontal') {
+          let halfHandleWidthRelative = this.handleFrom.getWidth() / 2 / this.line.getWidth();
+        } else {
+          let halfHandleWidthRelative = this.handleFrom.getWidth() / 2 / this.line.getHeight();
+        }
+        
+        let position = this.getValueRelative(data.state.valueFrom, data.state.min, data.state.max);
+        position -= halfHandleWidthRelative;
+    
+        if (position < 0 - halfHandleWidthRelative) {
+          position = -halfHandleWidthRelative;
+        }
+        if (position > 1 - halfHandleWidthRelative) {
+          position = 1 - halfHandleWidthRelative;
+        }
+        
+        this.handleFrom.setPosition(position);
+
+        break;
+    }
+  }
+
+  getValueRelative(value, min, max) {
+    return (value - min) / (max - min);
+  }
+
+ 
 }

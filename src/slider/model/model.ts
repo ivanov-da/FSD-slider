@@ -16,16 +16,56 @@ export default class Model extends Observer{
   }
 
   changeProperty(property) {
-    this.state[property.name] = this.calcValue(property.value);
     
-    let valueRelative = this.getValueRelative(this.state[property.name]);
+    let updatedProperty;
+    let updatedValue
 
-    console.log("🚀 ~ file: model.ts ~ line 26 ~ Model ~ changeProperty ~ this.state.valueTo", this.state.valueTo)
+    switch (property.name) {
+      case 'value':
+        updatedValue = this.calcValue(property.value);
+        
+
+        if (this.state.type === 'single') {
+          updatedProperty = 'valueTo';
+        } else {
+          let isValueTo = () => {
+            return (updatedValue - this.state.valueFrom) / (this.state.valueTo - this.state.valueFrom) >= 0.5;
+          }
+          updatedProperty = isValueTo() ? 'valueTo' : 'valueFrom';
+        }
+
+        this.state[updatedProperty] = updatedValue;
+        
+        
+        break;
+      
+      case 'valueFrom':
+        updatedProperty = 'valueFrom';
+        updatedValue = this.calcValue(property.value);
+        this.state[property.name] = updatedValue;
+
+        break;
+
+      case 'valueTo':
+        updatedProperty = 'valueTo';
+        updatedValue = this.calcValue(property.value);
+        this.state[property.name] = updatedValue;  
+        break;
+
+      default:
+        /* this.state[property.name] = this.calcValue(property.value); */
+        break;
+    }
+    
+    
+    
+    
 
     this.notifyObservers({
-      name: [property.name],
-      value: valueRelative,
+      name: updatedProperty,
+      state: this.state,
     })
+      
   }
 
   calcValue(value) {
