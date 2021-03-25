@@ -54,6 +54,7 @@ export default class View extends Observer {
   onLineClick (event) {
 
     let newPositionRelative = this.calcLineClickPositionRelative(event);
+    console.log("🚀 ~ file: view.ts ~ line 57 ~ View ~ onLineClick ~ newPositionRelative", newPositionRelative)
     
 
     this.notifyObservers({
@@ -65,10 +66,12 @@ export default class View extends Observer {
 
   onHandleMouseDown(event) {
     
+    console.log("🚀 ~ file: view.ts ~ line 73 ~ View ~ onHandleMouseDown ~ event", event)
     event.preventDefault(); // предотвратить запуск выделения (действие браузера)
     const halfHandleWidth = this.handle.getWidth() / 2;
 
     if (this.state.direction === 'horizontal') {
+    
       
       const lineWidth = this.line.getWidth();
       const lineLeftCoordinate = this.line.getLeftCoordinate();
@@ -129,11 +132,6 @@ export default class View extends Observer {
     }
   }
 
-  setHandlePosition(position) {
-
-
-  }
-
   calcLineClickPositionRelative(event) {
     const handleWidth = this.handle.getWidth();
     
@@ -151,6 +149,9 @@ export default class View extends Observer {
       const halfHandleWidthRelative = handleWidth / 2 / lineHeight;
       const newPositionRelative = (event.clientY - lineTopCoordinate) / lineHeight;
     }
+
+    newPositionRelative = newPositionRelative > 1 ?  1 : newPositionRelative;
+    newPositionRelative = newPositionRelative < 0 ?  0 : newPositionRelative;
 
     return newPositionRelative;
   }
