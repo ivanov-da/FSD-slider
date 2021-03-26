@@ -16,6 +16,7 @@ export default class Model extends Observer{
   }
 
   changeProperty(property) {
+
     
     let updatedProperty;
     let updatedValue
@@ -69,7 +70,28 @@ export default class Model extends Observer{
   }
 
   calcValue(value) {
-    return this.state.min + (this.state.max - this.state.min) * value;
+
+    value *= (this.state.max - this.state.min);
+
+    return this.state.min + +this.calcValueByStep(value);
+  }
+
+  calcValueByStep(value) {
+    let stepsInValue = value / this.state.step;
+
+    if (stepsInValue % 1 >= 0.5) {
+      value = this.state.step * Math.ceil(stepsInValue);
+    } else {
+      value = this.state.step * Math.floor(stepsInValue);
+    }
+
+    // количество знаков после запятой
+    let accuracy = this.state.step.toString().includes('.') ? (this.state.step.toString().split('.').pop().length) : 0;
+                   
+    
+
+    return value.toFixed(accuracy);
+    
   }
 
   getValueRelative(value) {
@@ -188,39 +210,6 @@ export default class Model extends Observer{
     }
   }
 
-
-
-/*   update(updateParameter) {
-    switch (updateParameter.key) {
-      case 'type':
-        if (updateParameter.key === 'double' && this.state.type === 'single') {
-          this.state.valueFrom = this.state.min;
-        }
-
-        this.state.type = this.validType(updateParameter.value);
-        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
-        break;
-      case 'step':
-        this.state.step = this.validStep(updateParameter.value);
-        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
-        this.state.valueTo = this.validValueTo(this.state.valueTo);
-        break;
-      case 'min':
-        this.state.min = this.validMin(updateParameter.value);
-        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
-        this.state.valueTo = this.validValueTo(this.state.valueTo);
-        break;
-      case 'max':
-        this.state.max = this.validMax(updateParameter.value);
-        this.state.valueFrom = this.validValueFrom(this.state.valueFrom);
-        this.state.valueTo = this.validValueTo(this.state.valueTo);
-        break;
-      case 'valueFrom':
-        this.state.valueFrom = this.validValueFrom(updateParameter.value);
-        break;
-      case 'valueTo':
-        this.state.valueTo = this.validValueTo(updateParameter.value);
-        break;
-    }
-  } */
 }
+
+    

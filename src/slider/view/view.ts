@@ -177,7 +177,7 @@ export default class View extends Observer {
   }
 
   update(data) {
-    console.log("🚀 ~ file: view.ts ~ line 173 ~ View ~ update ~ data", data)
+    
     switch (data.name) {
       case 'valueTo':
         if (this.state.direction === 'horizontal') {
