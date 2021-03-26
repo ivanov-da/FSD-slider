@@ -16,7 +16,7 @@ export default class Presenter {
 
 
   updateModel(property) {
-    this.changeProperty(property);
+    this.updateProperty(property);
   }
 
   updateView(data) {

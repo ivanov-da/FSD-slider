@@ -15,7 +15,7 @@ export default class Model extends Observer{
     return this.state;
   }
 
-  changeProperty(property) {
+  updateProperty(property) {
 
     
     let updatedProperty;
@@ -43,6 +43,8 @@ export default class Model extends Observer{
       case 'valueFrom':
         updatedProperty = 'valueFrom';
         updatedValue = this.calcValue(property.value);
+        updatedValue = this.validValueFrom(updatedValue);
+
         this.state[property.name] = updatedValue;
 
         break;
@@ -50,6 +52,8 @@ export default class Model extends Observer{
       case 'valueTo':
         updatedProperty = 'valueTo';
         updatedValue = this.calcValue(property.value);
+        updatedValue = this.validValueTo(updatedValue);
+
         this.state[property.name] = updatedValue;  
         break;
 
@@ -58,19 +62,13 @@ export default class Model extends Observer{
         break;
     }
     
-    
-    
-    
-
     this.notifyObservers({
       name: updatedProperty,
       state: this.state,
     })
-      
   }
 
   calcValue(value) {
-
     value *= (this.state.max - this.state.min);
 
     return this.state.min + +this.calcValueByStep(value);
@@ -87,18 +85,15 @@ export default class Model extends Observer{
 
     // количество знаков после запятой
     let accuracy = this.state.step.toString().includes('.') ? (this.state.step.toString().split('.').pop().length) : 0;
-                   
-    
 
     return value.toFixed(accuracy);
-    
   }
 
   getValueRelative(value) {
     return (value - this.state.min) / (this.state.max - this.state.min);
   }
 
-  validType(type) {
+/*   validType(type) {
     if (type === 'single' || type === 'double') {
       return type;
     } else {
@@ -128,77 +123,48 @@ export default class Model extends Observer{
     } else {
       return this.state.max;
     }
-  }
+  } */
 
-  validValue(value) {
-    let stepsInValue = value / this.state.step;
-
-
-    if (stepsInValue % 1 >= 0.5) {
-      value = this.state.step * Math.ceil(stepsInValue);
-
-    } else {
-      value = this.state.step * Math.floor(stepsInValue);
-
-    }
-
-    if (Number.isInteger(value)) {
-
-      return value;
-    } else {
-
-      return value.toFixed(1);
-
-    }
-  }
 
   validValueTo(valueTo) {
-    if (typeof valueTo === 'number') {
-      valueTo = this.validValue(valueTo);
-    } else {
-      valueTo = this.state.valueTo;
-    }
+    let value = valueTo;
 
     if (this.state.type === 'single') {
 
-      if (valueTo > this.state.max) {
-        valueTo = this.state.max;
-      } else if (valueTo < this.state.min) {
-        valueTo = this.state.min;
+      if (value > this.state.max) {
+        value = this.state.max;
+      } else if (value < this.state.min) {
+        value = this.state.min;
       }
 
     } else if (this.state.type === 'double') {
-      if (valueTo > this.state.max) {
-        valueTo = this.state.max;
-      } else if (valueTo <= this.state.valueFrom) {
-        valueTo = this.state.valueFrom + this.state.step;
+      if (value > this.state.max) {
+        value = this.state.max;
+      } else if (value <= this.state.valueFrom) {
+        value = this.state.valueFrom + this.state.step;
       }
     }
-    return valueTo;
+    return value;
   }
 
   validValueFrom(valueFrom) {
-    if (typeof valueFrom === 'number') {
-      valueFrom = this.validValue(valueFrom);
-    } else {
-      valueFrom = this.state.valueFrom;
-    }
+    let value = valueFrom;
 
     if (this.state.type === 'single') {
-      valueFrom = null;
+      value = null;
 
     } else if (this.state.type === 'double') {
-      if (valueFrom < this.state.min) {
-        valueFrom = this.state.min;
-      } else if (valueFrom >= this.state.valueTo) {
-        valueFrom = this.state.valueTo - this.state.step;
+      if (value < this.state.min) {
+        value = this.state.min;
+      } else if (value >= this.state.valueTo) {
+        value = this.state.valueTo - this.state.step;
       }
     }
 
-    return valueFrom;
+    return value;
   }
 
-  validStep(step) {
+/*   validStep(step) {
     if (typeof step === 'number') {
       if (step > 0) {
         return step;
@@ -208,8 +174,5 @@ export default class Model extends Observer{
     } else {
       return this.state.step;
     }
-  }
-
+  } */
 }
-
-    
