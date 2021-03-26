@@ -8,8 +8,9 @@ import presenter from './presenter/presenter';
   let methods = {
     init : function( options ) {
       let settings = $.extend({
-        direction: 'horizontal',
+        direction: 'vertical',
         type: 'double',
+        popover: true,
         min: 0,
         max: 100,
         valueFrom: 1,

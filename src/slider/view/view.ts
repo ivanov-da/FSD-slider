@@ -2,6 +2,7 @@ import Observer from "../observer/observer";
 import ViewBar from "./view-bar";
 import ViewHandle from "./view-handle";
 import ViewLine from "./view-line";
+import ViewPopover from "./view-popover";
 
 export default class View extends Observer {
   line: any;
@@ -17,14 +18,11 @@ export default class View extends Observer {
     
 
     this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider__vertical';
-
-
     this.template = '<div class=' + `'${this.sliderClass}'` + '></div>';
-
-
     this.root.innerHTML = this.template;
     this.container = this.root.querySelector('.fsd-slider');
 
+    // инициализация линии
     this.line = new ViewLine(this.container, this.state.direction);
     this.line.init();
 
@@ -37,9 +35,10 @@ export default class View extends Observer {
 
     this.handle = new ViewHandle(this.container, this.state.direction);
     let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
-
-
     this.handle.init(handleStartPosition, lineLength);
+
+    this.handlePopover = new ViewPopover(this.container, this.state.direction);
+    this.handlePopover.init(handleStartPosition);
 
     if (this.state.type === 'double') {
       this.handleFrom = new ViewHandle(this.container, this.state.direction);
@@ -66,10 +65,7 @@ export default class View extends Observer {
   }
 
   onLineClick (event) {
-
     let newPositionRelative = this.calcLineClickPositionRelative(event);
-    console.log("🚀 ~ file: view.ts ~ line 57 ~ View ~ onLineClick ~ newPositionRelative", newPositionRelative)
-    
 
     this.notifyObservers({
       name: 'value',
@@ -115,36 +111,19 @@ export default class View extends Observer {
       let newPosition;
 
       if (this.state.direction === 'horizontal') {
-      
         newPosition = (event.clientX - shift - lineLeftCoordinate + halfHandleWidth ) / lineWidth;
-        
-        
       } else {
-  
         newPosition = (event.clientY - shift - lineTopCoordinate + halfHandleWidth ) / lineHeight;
-        
       }
 
-      
-      
       newPosition = newPosition > 1 ?  1 : newPosition;
       newPosition = newPosition < 0 ?  0 : newPosition;
-      
-      
-      
 
-      
-      
-      
-      
-      
       this.notifyObservers({
         name: updatedHandle,
         value: newPosition,
       });
     }
-      
-      
 
     function onHandleMouseUp() {
       document.removeEventListener('mouseup', onHandleMouseUp);
@@ -187,6 +166,9 @@ export default class View extends Observer {
         }
         
         let position = this.getValueRelative(data.state.valueTo, data.state.min, data.state.max);
+
+        this.handlePopover.setPosition(position);
+
         position -= halfHandleWidthRelative;
     
         if (position < 0 - halfHandleWidthRelative) {
@@ -196,7 +178,9 @@ export default class View extends Observer {
           position = 1 - halfHandleWidthRelative;
         }
         
+        
         this.handle.setPosition(position);
+        
 
         break;
 
