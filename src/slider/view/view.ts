@@ -139,13 +139,11 @@ export default class View extends Observer {
       
       const lineWidth = this.line.getWidth();
       const lineLeftCoordinate = this.line.getLeftCoordinate();
-      
-      const halfHandleWidthRelative = handleWidth / 2 / lineWidth;
       const newPositionRelative = (event.clientX - lineLeftCoordinate) / lineWidth;
     } else {
+
       const lineHeight = this.line.getHeight();
       const lineTopCoordinate = this.line.getTopCoordinate();
-      const halfHandleWidthRelative = handleWidth / 2 / lineHeight;
       const newPositionRelative = (event.clientY - lineTopCoordinate) / lineHeight;
     }
 
@@ -159,46 +157,30 @@ export default class View extends Observer {
     
     switch (data.name) {
       case 'valueTo':
-        if (this.state.direction === 'horizontal') {
-          let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getWidth();
-        } else {
-          let halfHandleWidthRelative = this.handle.getWidth() / 2 / this.line.getHeight();
-        }
         
         let position = this.getValueRelative(data.state.valueTo, data.state.min, data.state.max);
 
-        this.handlePopover.setPosition(position);
-
-        position -= halfHandleWidthRelative;
-    
-        if (position < 0 - halfHandleWidthRelative) {
-          position = -halfHandleWidthRelative;
+        if (position < 0) {
+          position = 0;
         }
-        if (position > 1 - halfHandleWidthRelative) {
-          position = 1 - halfHandleWidthRelative;
+        if (position > 1) {
+          position = 1;
         }
-        
         
         this.handle.setPosition(position);
+        this.handlePopover.setPosition(position);
         
-
         break;
 
       case 'valueFrom':
-        if (this.state.direction === 'horizontal') {
-          let halfHandleWidthRelative = this.handleFrom.getWidth() / 2 / this.line.getWidth();
-        } else {
-          let halfHandleWidthRelative = this.handleFrom.getWidth() / 2 / this.line.getHeight();
-        }
-        
+
         let position = this.getValueRelative(data.state.valueFrom, data.state.min, data.state.max);
-        position -= halfHandleWidthRelative;
-    
-        if (position < 0 - halfHandleWidthRelative) {
-          position = -halfHandleWidthRelative;
+        
+        if (position < 0) {
+          position = 0;
         }
-        if (position > 1 - halfHandleWidthRelative) {
-          position = 1 - halfHandleWidthRelative;
+        if (position > 1) {
+          position = 1;
         }
         
         this.handleFrom.setPosition(position);
