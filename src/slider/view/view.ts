@@ -37,8 +37,12 @@ export default class View extends Observer {
     let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
     this.handle.init(handleStartPosition, lineLength);
 
-    this.handlePopover = new ViewPopover(this.container, this.state.direction);
-    this.handlePopover.init(handleStartPosition);
+    if (this.state.popover) {
+      this.handlePopover = new ViewPopover(this.container, this.state.direction);
+      this.handlePopover.init(handleStartPosition);
+    }
+    
+
 
     if (this.state.type === 'double') {
       this.handleFrom = new ViewHandle(this.container, this.state.direction);
@@ -154,6 +158,8 @@ export default class View extends Observer {
   }
 
   update(data) {
+
+    console.log(this)
     
     switch (data.name) {
       case 'valueTo':
@@ -168,14 +174,17 @@ export default class View extends Observer {
         }
         
         this.handle.setPosition(position);
-        this.handlePopover.setPosition(position);
+
+        if (this.handlePopover) {
+          this.handlePopover.setPosition(position);
+        }
         
         break;
 
       case 'valueFrom':
 
         let position = this.getValueRelative(data.state.valueFrom, data.state.min, data.state.max);
-        
+
         if (position < 0) {
           position = 0;
         }
