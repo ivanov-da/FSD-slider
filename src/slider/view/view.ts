@@ -48,6 +48,11 @@ export default class View extends Observer {
 
       this.handleFrom.element.setAttribute('data-handle-from', true);
 
+      if (this.state.popover) {
+        this.handleFromPopover = new ViewPopover(this.container, this.state.direction);
+        this.handleFromPopover.init(handleFromStartPosition, this.state.valueFrom);
+      }
+
       this.handleFrom.element.onmousedown = this.onHandleMouseDown.bind(this);
       this.handleFrom.ondragstart = () => false;
     }
@@ -188,6 +193,10 @@ export default class View extends Observer {
         }
         
         this.handleFrom.setPosition(position);
+
+        if (this.handleFromPopover) {
+          this.handleFromPopover.update(position, data.state.valueFrom);
+        }
 
         break;
     }

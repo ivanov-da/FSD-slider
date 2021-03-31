@@ -12,10 +12,10 @@ import presenter from './presenter/presenter';
         type: 'double',
         popover: true,
         min: 0,
-        max: 1,
+        max: 100,
         valueFrom: 0,
-        valueTo: 1,
-        step: 0.05,
+        valueTo: 100,
+        step: 2,
       }, options);
 
       let model = new Model();
