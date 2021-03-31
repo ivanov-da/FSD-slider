@@ -27,6 +27,7 @@ export default class ViewHandle {
   getTopCoordinate() {
     return this.element.getBoundingClientRect().top;
   }
+
   
   setPosition(position) {
     if (this.direction === 'horizontal') {

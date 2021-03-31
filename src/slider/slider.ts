@@ -14,7 +14,7 @@ import presenter from './presenter/presenter';
         min: 0,
         max: 100,
         valueFrom: 0,
-        valueTo: 100,
+        valueTo: 75,
         step: 2,
       }, options);
 
