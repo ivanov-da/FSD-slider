@@ -36,7 +36,7 @@ export default class View extends Observer {
 
     if (this.state.popover) {
       this.handlePopover = new ViewPopover(this.container, this.state.direction);
-      this.handlePopover.init(handleStartPosition);
+      this.handlePopover.init(handleStartPosition, this.state.valueTo);
     }
     
 
@@ -171,7 +171,7 @@ export default class View extends Observer {
         this.handle.setPosition(position);
 
         if (this.handlePopover) {
-          this.handlePopover.setPosition(position);
+          this.handlePopover.update(position, data.state.valueTo);
         }
         
         break;
