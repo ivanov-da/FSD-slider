@@ -10,10 +10,11 @@ import presenter from './presenter/presenter';
       let settings = $.extend({
         direction: 'horizontal',
         type: 'double',
+        popover: true,
         min: 0,
         max: 100,
-        valueFrom: 25,
-        valueTo: 75,
+        valueFrom: 1,
+        valueTo: 50,
         step: 1,
       }, options);
 

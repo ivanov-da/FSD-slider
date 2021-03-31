@@ -1,4 +1,4 @@
-export default class ViewHandle {
+export default class ViewPopover {
   constructor(root, direction) {
     this.root = root;
     this.direction = direction;
@@ -6,9 +6,9 @@ export default class ViewHandle {
   }
 
   init(position) {
-    this.template = this.direction === 'horizontal' ? `<div class='fsd-slider__handle'></div>` : `<div class='fsd-slider__handle fsd-slider__handle_vertical'></div>`;
+    this.template = this.direction === 'horizontal' ? `<div class='fsd-slider__popover'>10</div>` : `<div class='fsd-slider__popover fsd-slider__popover_vertical'>10</div>`;
     this.root.insertAdjacentHTML('beforeend', this.template);
-    let elements = this.root.querySelectorAll('.fsd-slider__handle');
+    let elements = this.root.querySelectorAll('.fsd-slider__popover');
     this.element = elements.[elements.length - 1];
 
     
@@ -20,14 +20,6 @@ export default class ViewHandle {
     return this.element.getBoundingClientRect().width;
   }
 
-  getLeftCoordinate() {
-    return this.element.getBoundingClientRect().left;
-  }
-
-  getTopCoordinate() {
-    return this.element.getBoundingClientRect().top;
-  }
-  
   setPosition(position) {
     if (this.direction === 'horizontal') {
     
@@ -36,4 +28,5 @@ export default class ViewHandle {
       this.element.style.top = position * 100 + '%';
     }
   }
+
 }

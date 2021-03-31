@@ -8,7 +8,8 @@
 
 
   &__bar,
-  &__handle {
+  &__handle,
+  &__popover {
     position: absolute;
   }
 
@@ -38,18 +39,33 @@
     top: -5px;
     left: 50%;
     cursor: pointer;
+    transform: translateX(-50%);
+    
+    
 
     &_vertical {
       top: 50%;
       left: -5px;
+      transform: translateY(-50%);
     }
-
   }
 
-  &__animation {
-    -webkit-transition: left 0.4s ease;
-    -moz-transition: left 0.4s ease;
-    -o-transition: left 0.4s ease;
-    transition: left 0.4s ease; 
+  &__popover {
+    display: inline-block;
+    padding: 2px 5px;
+    background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+
+
+    &_vertical {
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+    }
   }
 }
