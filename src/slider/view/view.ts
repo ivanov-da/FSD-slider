@@ -35,8 +35,8 @@ export default class View extends Observer {
 
 
     if (this.state.popover) {
-      this.handlePopover = new ViewPopover(this.container, this.state.direction);
-      this.handlePopover.init(handleStartPosition);
+      this.handlePopover = new ViewPopover(this.container, this.state.direction, 'single');
+      this.handlePopover.init(handleStartPosition, this.state.valueTo);
     }
     
 
@@ -47,6 +47,17 @@ export default class View extends Observer {
       this.handleFrom.init(handleFromStartPosition);
 
       this.handleFrom.element.setAttribute('data-handle-from', true);
+
+      if (this.state.popover) {
+        this.handleFromPopover = new ViewPopover(this.container, this.state.direction, 'single');
+        this.handleFromPopover.init(handleFromStartPosition, this.state.valueFrom);
+
+        this.handlesCommonPopover = new ViewPopover(this.container, this.state.direction, 'common');
+        
+        this.handlesCommonPopover.initCommon(this.calcPositionCommonPopover(), this.state.valueFrom, this.state.valueTo);
+
+        this.setPopoversVisibility()
+      }
 
       this.handleFrom.element.onmousedown = this.onHandleMouseDown.bind(this);
       this.handleFrom.ondragstart = () => false;
@@ -154,7 +165,7 @@ export default class View extends Observer {
 
   update(data) {
 
-    console.log(this)
+    
     
     switch (data.name) {
       case 'valueTo':
@@ -171,7 +182,13 @@ export default class View extends Observer {
         this.handle.setPosition(position);
 
         if (this.handlePopover) {
-          this.handlePopover.setPosition(position);
+          this.handlePopover.update(position, data.state.valueTo);
+
+          if (this.handlesCommonPopover) {
+            this.handlesCommonPopover.updateCommon(this.calcPositionCommonPopover(), data.state.valueFrom,data.state.valueTo);
+          }
+
+          this.setPopoversVisibility()
         }
         
         break;
@@ -189,6 +206,12 @@ export default class View extends Observer {
         
         this.handleFrom.setPosition(position);
 
+        if (this.handleFromPopover) {
+          this.handleFromPopover.update(position, data.state.valueFrom);
+          this.handlesCommonPopover.updateCommon(this.calcPositionCommonPopover(), data.state.valueFrom,data.state.valueTo);
+          this.setPopoversVisibility()
+        }
+
         break;
     }
   }
@@ -197,5 +220,48 @@ export default class View extends Observer {
     return (value - min) / (max - min);
   }
 
- 
+  calcPositionCommonPopover() {
+    let position;
+    if (this.state.direction === 'horizontal') {
+      position = (parseInt(this.handle.element.style.left) + parseInt(this.handleFrom.element.style.left)) / 2;
+    } else {
+      position = (parseInt(this.handle.element.style.top) + parseInt(this.handleFrom.element.style.top)) / 2;
+      
+    }
+    return position;
+  }
+
+  setPopoversVisibility() {
+    
+    if (this.state.direction === 'horizontal') {
+      let handleFromPopoverRightCoordinate = this.handleFromPopover.getRightCoordinate();
+      
+      let handleToPopoverLeftCoordinate = this.handlePopover.getLeftCoordinate();
+      
+      
+      if (handleFromPopoverRightCoordinate >= handleToPopoverLeftCoordinate) {
+        this.handlePopover.element.classList.add('fsd-slider__popover_hidden');
+        this.handleFromPopover.element.classList.add('fsd-slider__popover_hidden');
+        this.handlesCommonPopover.element.classList.remove('fsd-slider__popover_hidden');
+      } else {
+        this.handlePopover.element.classList.remove('fsd-slider__popover_hidden');
+        this.handleFromPopover.element.classList.remove('fsd-slider__popover_hidden');
+        this.handlesCommonPopover.element.classList.add('fsd-slider__popover_hidden');
+      }
+
+    } else {
+      let handleFromPopoverBottomCoordinate = this.handleFromPopover.getBottomCoordinate();
+      let handleToPopoverTopCoordinate = this.handlePopover.getTopCoordinate();
+      
+      if (handleFromPopoverBottomCoordinate >= handleToPopoverTopCoordinate) {
+        this.handlePopover.element.classList.add('fsd-slider__popover_hidden');
+        this.handleFromPopover.element.classList.add('fsd-slider__popover_hidden');
+        this.handlesCommonPopover.element.classList.remove('fsd-slider__popover_hidden');
+      } else {
+        this.handlePopover.element.classList.remove('fsd-slider__popover_hidden');
+        this.handleFromPopover.element.classList.remove('fsd-slider__popover_hidden');
+        this.handlesCommonPopover.element.classList.add('fsd-slider__popover_hidden');
+      }
+    }
+  }
 }

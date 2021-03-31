@@ -13,9 +13,9 @@ import presenter from './presenter/presenter';
         popover: true,
         min: 0,
         max: 100,
-        valueFrom: 1,
-        valueTo: 50,
-        step: 1,
+        valueFrom: 0,
+        valueTo: 75,
+        step: 2,
       }, options);
 
       let model = new Model();
