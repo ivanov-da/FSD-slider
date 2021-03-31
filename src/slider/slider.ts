@@ -11,11 +11,12 @@ import presenter from './presenter/presenter';
         direction: 'horizontal',
         type: 'double',
         popover: true,
+        scale: true,
         min: 0,
-        max: 100,
+        max: 100000,
         valueFrom: 0,
-        valueTo: 75,
-        step: 2,
+        valueTo: 100000,
+        step: 1,
       }, options);
 
       let model = new Model();

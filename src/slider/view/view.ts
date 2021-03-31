@@ -3,6 +3,7 @@ import ViewBar from "./view-bar";
 import ViewHandle from "./view-handle";
 import ViewLine from "./view-line";
 import ViewPopover from "./view-popover";
+import ViewScale from "./view-scale";
 
 export default class View extends Observer {
   line: any;
@@ -25,6 +26,9 @@ export default class View extends Observer {
     // инициализация линии
     this.line = new ViewLine(this.container, this.state.direction);
     this.line.init();
+
+    this.scale = new ViewScale(this.container, this.state.direction);
+    this.scale.init(this.state.valueFrom, this.state.valueTo);
 
     this.handle = new ViewHandle(this.container, this.state.direction);
     let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
