@@ -26,16 +26,13 @@ export default class View extends Observer {
     this.line = new ViewLine(this.container, this.state.direction);
     this.line.init();
 
-    const lineLength;
-    if (this.state.direction === 'horizontal') {
-      lineLength = this.line.getWidth();
-    } else {
-      lineLength = this.line.getHeight();
-    }
-
     this.handle = new ViewHandle(this.container, this.state.direction);
     let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
-    this.handle.init(handleStartPosition, lineLength);
+    this.handle.init(handleStartPosition);
+
+    this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
+    this.handle.ondragstart = () => false;
+
 
     if (this.state.popover) {
       this.handlePopover = new ViewPopover(this.container, this.state.direction);
@@ -47,7 +44,7 @@ export default class View extends Observer {
     if (this.state.type === 'double') {
       this.handleFrom = new ViewHandle(this.container, this.state.direction);
       let handleFromStartPosition = this.calcHandleStartPosition(this.state.valueFrom);
-      this.handleFrom.init(handleFromStartPosition, lineLength);
+      this.handleFrom.init(handleFromStartPosition);
 
       this.handleFrom.element.setAttribute('data-handle-from', true);
 
@@ -58,10 +55,8 @@ export default class View extends Observer {
     this.bar = new ViewBar(this.container, this.state.direction);
     this.bar.init();
 
+
     this.line.element.onclick = this.onLineClick.bind(this);
-    this.handle.element.onmousedown = this.onHandleMouseDown.bind(this);
-    this.handle.ondragstart = () => false;
-    
   }
 
   calcHandleStartPosition(value: number): number {
