@@ -3,6 +3,7 @@ import ViewBar from "./view-bar";
 import ViewHandle from "./view-handle";
 import ViewLine from "./view-line";
 import ViewPopover from "./view-popover";
+import ViewScale from "./view-scale";
 
 export default class View extends Observer {
   line: any;
@@ -26,6 +27,14 @@ export default class View extends Observer {
     this.line = new ViewLine(this.container, this.state.direction);
     this.line.init();
 
+    
+
+    if (this.state.scale) {
+      this.scale = new ViewScale(this.container, this.state.direction);
+      this.scale.init(this.state.min, this.state.max);
+    }
+    
+
     this.handle = new ViewHandle(this.container, this.state.direction);
     let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);
     this.handle.init(handleStartPosition);
@@ -39,12 +48,20 @@ export default class View extends Observer {
       this.handlePopover.init(handleStartPosition, this.state.valueTo);
     }
     
+    this.bar = new ViewBar(this.container, this.state.direction, this.state.type);
+    
+    if (this.state.type === 'single') {
+      this.bar.init(null, this.handle.element);
+    }
+
 
 
     if (this.state.type === 'double') {
       this.handleFrom = new ViewHandle(this.container, this.state.direction);
       let handleFromStartPosition = this.calcHandleStartPosition(this.state.valueFrom);
       this.handleFrom.init(handleFromStartPosition);
+
+      this.bar.init(this.handleFrom.element, this.handle.element);
 
       this.handleFrom.element.setAttribute('data-handle-from', true);
 
@@ -63,11 +80,11 @@ export default class View extends Observer {
       this.handleFrom.ondragstart = () => false;
     }
 
-    this.bar = new ViewBar(this.container, this.state.direction);
-    this.bar.init();
 
 
-    this.line.element.onclick = this.onLineClick.bind(this);
+    this.scale.element.addEventListener('click', this.onLineClick.bind(this));
+    this.line.element.addEventListener('click', this.onLineClick.bind(this));
+    this.bar.element.addEventListener('click', this.onLineClick.bind(this));
   }
 
   calcHandleStartPosition(value: number): number {
@@ -164,8 +181,6 @@ export default class View extends Observer {
   }
 
   update(data) {
-
-    
     
     switch (data.name) {
       case 'valueTo':
@@ -181,14 +196,17 @@ export default class View extends Observer {
         
         this.handle.setPosition(position);
 
+        this.state.type === 'single'
+          ? this.bar.update(null, this.handle.element)
+          : this.bar.update(this.handleFrom.element, this.handle.element);
+
         if (this.handlePopover) {
           this.handlePopover.update(position, data.state.valueTo);
 
           if (this.handlesCommonPopover) {
             this.handlesCommonPopover.updateCommon(this.calcPositionCommonPopover(), data.state.valueFrom,data.state.valueTo);
+            this.setPopoversVisibility();
           }
-
-          this.setPopoversVisibility()
         }
         
         break;
@@ -205,6 +223,8 @@ export default class View extends Observer {
         }
         
         this.handleFrom.setPosition(position);
+
+        this.bar.update(this.handleFrom.element, this.handle.element);
 
         if (this.handleFromPopover) {
           this.handleFromPopover.update(position, data.state.valueFrom);
