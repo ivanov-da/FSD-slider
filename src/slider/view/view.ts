@@ -27,8 +27,13 @@ export default class View extends Observer {
     this.line = new ViewLine(this.container, this.state.direction);
     this.line.init();
 
-    this.scale = new ViewScale(this.container, this.state.direction);
-    this.scale.init(this.state.valueFrom, this.state.valueTo);
+    
+
+    if (this.state.scale) {
+      this.scale = new ViewScale(this.container, this.state.direction);
+      this.scale.init(this.state.min, this.state.max);
+    }
+    
 
     this.handle = new ViewHandle(this.container, this.state.direction);
     let handleStartPosition = this.calcHandleStartPosition(this.state.valueTo);

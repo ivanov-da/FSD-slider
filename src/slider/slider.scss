@@ -76,24 +76,55 @@
   }
 
   &__scale {
-    position: relative;
-    top: 2px;
+    position: absolute;
+    top: 6px;
     width: 100%;
-    height: 16px;
+    height: 20px;
+    cursor: pointer;
 
     &_vertical {
       height: 100%;
+      width: 20px;
+      left: -20px;
+      top: 0;
     }
   }
 
   &__stroke {
+    top: 2px;
     width: 1px;
-    height: 50%;
+    height: 8px;
     background: #6FCF97;
     transform: translateX(-50%);
 
+    &_vertical {
+      left: 14px;
+      height: 1px;
+      width: 8px;
+    }
+
     &_small {
-      height: 25%;
+      height: 4px;
+    }
+
+    &_small-vertical {
+      left: 16px;
+      height: 1px;
+      width: 4px;
     }
   }
+
+  &__scale-number {
+    top: 10px;
+    transform: translateX(-50%);
+    color: #6FCF97;
+    font-size: 10px;
+
+    &_vertical {
+      right: 12px;
+      transform: translateY(-50%);
+      text-align: right;
+    }
+  }
+
 }
