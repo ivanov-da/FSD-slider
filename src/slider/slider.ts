@@ -8,15 +8,15 @@ import presenter from './presenter/presenter';
   let methods = {
     init : function( options ) {
       let settings = $.extend({
-        direction: 'horizontal',
-        type: 'double',
+        direction: 'horizontal', // horizontal or vertical
+        type: 'double', // single or double
         popover: true,
         scale: true,
-        min: 0,
-        max: 100000,
-        valueFrom: 0,
-        valueTo: 100000,
-        step: 1,
+        min: -100,
+        max: 100,
+        valueFrom: -100,
+        valueTo: 100,
+        step: 0.5,
       }, options);
 
       let model = new Model();
