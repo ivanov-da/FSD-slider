@@ -75,8 +75,8 @@ export default class View extends Observer {
     this.bar = new ViewBar(this.container, this.state.direction);
     this.bar.init();
 
-
-    this.line.element.onclick = this.onLineClick.bind(this);
+    this.scale.element.addEventListener('click', this.onLineClick.bind(this));
+    this.line.element.addEventListener('click', this.onLineClick.bind(this));
   }
 
   calcHandleStartPosition(value: number): number {
