@@ -1,6 +1,12 @@
 import '../slider/slider.ts';
+import {MDCTextField} from '@material/textfield';
+
+
+
 
 $(document).ready(function () {
+  const textField = new MDCTextField(document.querySelector('.mdc-text-field'));
+
   $('.slider-one').fsdSlider();
 /*   $('.fsd-slider2').fsdSlider();
   $('#test-slider').fsdSlider(); */

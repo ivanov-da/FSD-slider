@@ -7,7 +7,7 @@ html
     title Demo page
     link(rel='stylesheet' href='./demo.scss')
     script(src='./jquery-for-parcel.ts')
-    script(src='./demo.ts')
+    
   body
     .container
       .slider-demo
@@ -18,5 +18,23 @@ html
             span Тип слайдера
             input.slider-one__radio(type='radio' name='sliderOneType' value='horizontal')
             input.slider-one__radio(type='radio' name='sliderOneType' value='vertical')
+          label.mdc-text-field.mdc-text-field--filled
+            span.mdc-text-field__ripple
+            span.mdc-floating-label(id="my-label-id") Hint text
+            input.mdc-text-field__input(type='number' aria-labelledby="my-label-id")
+            span.mdc-line-ripple
+
+          <div class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="text-field-hero-input">
+            <div class="mdc-notched-outline">
+              <div class="mdc-notched-outline__leading"></div>
+              <div class="mdc-notched-outline__notch">
+                <label for="text-field-hero-input" class="mdc-floating-label"></label>
+              </div>
+              <div class="mdc-notched-outline__trailing"></div>
+            </div>
+          </div>
+    script(src='./demo.ts')
+
 
 
