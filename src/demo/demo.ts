@@ -1,11 +1,22 @@
 import '../slider/slider.ts';
 import {MDCTextField} from '@material/textfield';
-
+import {MDCSwitch} from '@material/switch';
 
 
 
 $(document).ready(function () {
-  const textField = new MDCTextField(document.querySelector('.mdc-text-field'));
+
+  $('.mdc-text-field').each(function (i, obj) {
+    MDCTextField.attachTo(obj);
+  });
+
+  $('.mdc-switch').each(function (i, obj) {
+    MDCSwitch.attachTo(obj);
+  });
+
+
+  
+  
 
   $('.slider-one').fsdSlider();
 /*   $('.fsd-slider2').fsdSlider();

@@ -2,19 +2,43 @@
 @use "@material/line-ripple/mdc-line-ripple";
 @use "@material/notched-outline/mdc-notched-outline";
 @use "@material/textfield";
+@use "@material/switch";
+
+@include switch.core-styles;
 
 @include textfield.core-styles;
 
+
 @import '../slider/slider.scss';
+@import 'normalize';
 
-.container {
-  margin: 100px auto;
-  width: 600px;
+.page {
+  width: 75%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
 
-  
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.wrapper {
+  width: 48%;
+  border: 1px solid red;
+}
+
+.slider-container {
+
 }
 
 .slider-one {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+

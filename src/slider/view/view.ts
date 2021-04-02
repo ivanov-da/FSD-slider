@@ -18,7 +18,7 @@ export default class View extends Observer {
     Object.assign(this.state, options);
     
 
-    this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider__vertical';
+    this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider_vertical';
     this.template = '<div class=' + `'${this.sliderClass}'` + '></div>';
     this.root.innerHTML = this.template;
     this.container = this.root.querySelector('.fsd-slider');
