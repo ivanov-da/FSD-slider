@@ -15,7 +15,7 @@
 .page {
   width: 75%;
   max-width: 1440px;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 
@@ -23,22 +23,64 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  width: 100%;
 }
 
 .wrapper {
-  width: 48%;
-  border: 1px solid red;
+  width: 690px;
+  border: 3px solid #66D2EA;
+  margin-bottom: 20px;
 }
 
 .slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 
+.slider-one,
+.slider-two,
+.slider-three,
+.slider-four {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5fcfdb3;
 }
 
 .slider-one {
   width: 400px;
   height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
+.slider-two {
+  width: 300px;
+  height: 300px;
+}
+
+.slider-three {
+  width: 200px;
+  height: 200px;
+}
+
+.slider-four {
+  width: 100px;
+  height: 100px;
+}
+
+.panel {
+  padding: 20px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 30px;
+}
+
+.input-number {
+ 
+}
+
+.mdc-text-field {
+  width: 100px;
+}
