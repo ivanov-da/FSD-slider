@@ -81,8 +81,10 @@ export default class View extends Observer {
     }
 
 
-
-    this.scale.element.addEventListener('click', this.onLineClick.bind(this));
+    if (this.scale) {
+      this.scale.element.addEventListener('click', this.onLineClick.bind(this));
+    }
+    
     this.line.element.addEventListener('click', this.onLineClick.bind(this));
     this.bar.element.addEventListener('click', this.onLineClick.bind(this));
   }
