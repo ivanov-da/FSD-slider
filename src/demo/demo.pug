@@ -20,7 +20,7 @@ mixin checkbox(options)
 
 mixin panel(options)
   .panel(id=options.id)
-    +inputNumber({title: 'Max'})
+    +inputNumber({title: 'Min'})
     +inputNumber({title: 'Max'})
     +inputNumber({title: 'Step'})
     +inputNumber({title: 'From'})
@@ -51,15 +51,15 @@ html
           .slider-container
             .slider-one
         .wrapper
-          +panel({id:'first-panel'})
+          +panel({id:'second-panel'})
           .slider-container
             .slider-two
         .wrapper
-          +panel({id:'first-panel'})
+          +panel({id:'third-panel'})
           .slider-container
             .slider-three
         .wrapper
-          +panel({id:'first-panel'})
+          +panel({id:'fourth-panel'})
           .slider-container
             .slider-four
       //-
