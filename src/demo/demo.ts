@@ -11,15 +11,39 @@ $(document).ready(function () {
     return this.getAttribute('aria-checked');
   }
 
-  function getMinValue() {
+  function updateSliderOneMinValue() {
     const property = {
       name: 'min',
       value: this.value
     };
-    return property;
+    $('.slider-one').fsdSlider('update', property);
   }
 
-  function getMaxValue() {
+  function updateSliderTwoMinValue() {
+    const property = {
+      name: 'min',
+      value: this.value
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeMinValue() {
+    const property = {
+      name: 'min',
+      value: this.value
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourMinValue() {
+    const property = {
+      name: 'min',
+      value: this.value
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOneMaxValue() {
     const property = {
       name: 'max',
       value: this.value
@@ -27,7 +51,31 @@ $(document).ready(function () {
     $('.slider-one').fsdSlider('update', property);
   }
 
-  function getStepValue() {
+  function updateSliderTwoMaxValue() {
+    const property = {
+      name: 'max',
+      value: this.value
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeMaxValue() {
+    const property = {
+      name: 'max',
+      value: this.value
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourMaxValue() {
+    const property = {
+      name: 'max',
+      value: this.value
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOneStepValue() {
     const property = {
       name: 'step',
       value: this.value
@@ -35,7 +83,31 @@ $(document).ready(function () {
     $('.slider-one').fsdSlider('update', property);
   }
 
-  function getFromValue() {
+  function updateSliderTwoStepValue() {
+    const property = {
+      name: 'step',
+      value: this.value
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeStepValue() {
+    const property = {
+      name: 'step',
+      value: this.value
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourStepValue() {
+    const property = {
+      name: 'step',
+      value: this.value
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOneFromValue() {
     const property = {
       name: 'valueFrom',
       value: this.value
@@ -43,7 +115,31 @@ $(document).ready(function () {
     $('.slider-one').fsdSlider('update', property);
   }
 
-  function getToValue() {
+  function updateSliderTwoFromValue() {
+    const property = {
+      name: 'valueFrom',
+      value: this.value
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeFromValue() {
+    const property = {
+      name: 'valueFrom',
+      value: this.value
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourFromValue() {
+    const property = {
+      name: 'valueFrom',
+      value: this.value
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOneToValue() {
     const property = {
       name: 'valueTo',
       value: this.value
@@ -51,7 +147,31 @@ $(document).ready(function () {
     $('.slider-one').fsdSlider('update', property);
   }
 
-  function getDirectionValue() {
+  function updateSliderTwoToValue() {
+    const property = {
+      name: 'valueTo',
+      value: this.value
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeToValue() {
+    const property = {
+      name: 'valueTo',
+      value: this.value
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourToValue() {
+    const property = {
+      name: 'valueTo',
+      value: this.value
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOneDirectionValue() {
     const property = {
       name: 'direction',
       value: this.getAttribute('aria-checked')
@@ -59,7 +179,31 @@ $(document).ready(function () {
     $('.slider-one').fsdSlider('update', property);
   }
 
-  function getIntervalValue() {
+  function updateSliderTwoDirectionValue() {
+    const property = {
+      name: 'direction',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeDirectionValue() {
+    const property = {
+      name: 'direction',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourDirectionValue() {
+    const property = {
+      name: 'direction',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOneIntervalValue() {
     const property = {
       name: 'type',
       value: this.getAttribute('aria-checked')
@@ -67,6 +211,93 @@ $(document).ready(function () {
     $('.slider-one').fsdSlider('update', property);
   }
 
+  function updateSliderTwoIntervalValue() {
+    const property = {
+      name: 'type',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeIntervalValue() {
+    const property = {
+      name: 'type',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourIntervalValue() {
+    const property = {
+      name: 'type',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOneScaleValue() {
+    const property = {
+      name: 'scale',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
+  function updateSliderTwoScaleValue() {
+    const property = {
+      name: 'scale',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreeScaleValue() {
+    const property = {
+      name: 'scale',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourScaleValue() {
+    const property = {
+      name: 'scale',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
+
+  function updateSliderOnePopoverValue() {
+    const property = {
+      name: 'popover',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
+  function updateSliderTwoPopoverValue() {
+    const property = {
+      name: 'popover',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-two').fsdSlider('update', property);
+  }
+
+  function updateSliderThreePopoverValue() {
+    const property = {
+      name: 'popover',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-three').fsdSlider('update', property);
+  }
+
+  function updateSliderFourPopoverValue() {
+    const property = {
+      name: 'popover',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-four').fsdSlider('update', property);
+  }
   
   //элементы материал инпутов
   let sliderOneInputs = {
@@ -110,42 +341,42 @@ $(document).ready(function () {
     let property;
     switch (i) {
       case 0:
-        property = element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderOneMinValue);
         break;
       case 1:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderOneMaxValue);
         break;
       case 2:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderOneStepValue);
         break;
       case 3:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderOneFromValue);
         break;
       case 4:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderOneToValue);
         break;
     }
 
-    console.log("🚀 ~ file: demo.ts ~ line 129 ~ sliderOneInputs.inputs.forEach ~ property;", property;)
+    
   });
     
 
   sliderTwoInputs.inputs.forEach((element, i) => {
     switch (i) {
       case 0:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderTwoMinValue);
         break;
       case 1:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderTwoMaxValue);
         break;
       case 2:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderTwoStepValue);
         break;
       case 3:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderTwoFromValue);
         break;
       case 4:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderTwoToValue);
         break;
     }
   });
@@ -153,19 +384,19 @@ $(document).ready(function () {
   sliderThreeInputs.inputs.forEach((element, i) => {
     switch (i) {
       case 0:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderThreeMinValue);
         break;
       case 1:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderThreeMaxValue);
         break;
       case 2:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderThreeStepValue);
         break;
       case 3:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderThreeFromValue);
         break;
       case 4:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderThreeToValue);
         break;
     }
   });
@@ -173,19 +404,19 @@ $(document).ready(function () {
   sliderFourInputs.inputs.forEach((element, i) => {
     switch (i) {
       case 0:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderFourMinValue);
         break;
       case 1:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderFourMaxValue);
         break;
       case 2:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderFourStepValue);
         break;
       case 3:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderFourFromValue);
         break;
       case 4:
-        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', updateSliderFourToValue);
         break;
     }
   });
@@ -213,16 +444,67 @@ $(document).ready(function () {
   sliderOneInputs.switches.forEach((element, i) => {
     switch (i) {
       case 0:
-        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getDirectionValue);
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderOneDirectionValue);
         break;
       case 1:
-        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getIntervalValue);
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderOneIntervalValue);
         break;
       case 2:
-        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getScaleValue);
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderOneScaleValue);
         break;
       case 3:
-        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getPopoverValue);
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderOnePopoverValue);
+        break;
+    }
+  });
+
+  sliderTwoInputs.switches.forEach((element, i) => {
+    switch (i) {
+      case 0:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderTwoDirectionValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderTwoIntervalValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderTwoScaleValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderTwoPopoverValue);
+        break;
+    }
+  });
+
+  sliderThreeInputs.switches.forEach((element, i) => {
+    switch (i) {
+      case 0:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderThreeDirectionValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderThreeIntervalValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderThreeScaleValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderThreePopoverValue);
+        break;
+    }
+  });
+
+  sliderFourInputs.switches.forEach((element, i) => {
+    switch (i) {
+      case 0:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderFourDirectionValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderFourIntervalValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderFourScaleValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('change', updateSliderFourPopoverValue);
         break;
     }
   });
