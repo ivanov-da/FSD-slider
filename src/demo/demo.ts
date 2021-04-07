@@ -11,9 +11,62 @@ $(document).ready(function () {
     return this.getAttribute('aria-checked');
   }
 
-  function getInputValue() {
-    return this.value;
+  function getMinValue() {
+    const property = {
+      name: 'min',
+      value: this.value
+    };
+    return property;
   }
+
+  function getMaxValue() {
+    const property = {
+      name: 'max',
+      value: this.value
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
+  function getStepValue() {
+    const property = {
+      name: 'step',
+      value: this.value
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
+  function getFromValue() {
+    const property = {
+      name: 'valueFrom',
+      value: this.value
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
+  function getToValue() {
+    const property = {
+      name: 'valueTo',
+      value: this.value
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
+  function getDirectionValue() {
+    const property = {
+      name: 'direction',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
+  function getIntervalValue() {
+    const property = {
+      name: 'type',
+      value: this.getAttribute('aria-checked')
+    };
+    $('.slider-one').fsdSlider('update', property);
+  }
+
   
   //элементы материал инпутов
   let sliderOneInputs = {
@@ -39,25 +92,103 @@ $(document).ready(function () {
   
   $('#first-panel .mdc-text-field').each(function (i, obj) {
     sliderOneInputs.inputs[i] = new MDCTextField(obj);
-    sliderOneInputs.inputs[i].root.querySelector('.mdc-text-field__input').addEventListener('input', getInputValue);
   });
 
   $('#second-panel .mdc-text-field').each(function (i, obj) {
     sliderTwoInputs.inputs[i] = new MDCTextField(obj);
-    sliderTwoInputs.inputs[i].root.querySelector('.mdc-text-field__input').addEventListener('input', getInputValue);
   });
 
   $('#third-panel .mdc-text-field').each(function (i, obj) {
     sliderThreeInputs.inputs[i] = new MDCTextField(obj);
-    sliderThreeInputs.inputs[i].root.querySelector('.mdc-text-field__input').addEventListener('input', getInputValue);
   });
 
   $('#fourth-panel .mdc-text-field').each(function (i, obj) {
     sliderFourInputs.inputs[i] = new MDCTextField(obj);
-    sliderFourInputs.inputs[i].root.querySelector('.mdc-text-field__input').addEventListener('input', getInputValue);
   });
 
-  
+  sliderOneInputs.inputs.forEach((element, i) => {
+    let property;
+    switch (i) {
+      case 0:
+        property = element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        break;
+      case 4:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        break;
+    }
+
+    console.log("🚀 ~ file: demo.ts ~ line 129 ~ sliderOneInputs.inputs.forEach ~ property;", property;)
+  });
+    
+
+  sliderTwoInputs.inputs.forEach((element, i) => {
+    switch (i) {
+      case 0:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        break;
+      case 4:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        break;
+    }
+  });
+
+  sliderThreeInputs.inputs.forEach((element, i) => {
+    switch (i) {
+      case 0:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        break;
+      case 4:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        break;
+    }
+  });
+
+  sliderFourInputs.inputs.forEach((element, i) => {
+    switch (i) {
+      case 0:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMinValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getMaxValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getStepValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getFromValue);
+        break;
+      case 4:
+        element.root.querySelector('.mdc-text-field__input').addEventListener('input', getToValue);
+        break;
+    }
+  });
 
   $('#first-panel .mdc-switch').each(function (i, obj) {
     sliderOneInputs.switches[i] = new MDCSwitch(obj);
@@ -78,8 +209,23 @@ $(document).ready(function () {
     sliderFourInputs.switches[i] = new MDCSwitch(obj);
     sliderFourInputs.switches[i].root.querySelector('.mdc-switch__native-control').addEventListener('change', getSwitchValue);
   });
-  console.log(sliderOneInputs, sliderTwoInputs, sliderThreeInputs, sliderFourInputs)
-
+  
+  sliderOneInputs.switches.forEach((element, i) => {
+    switch (i) {
+      case 0:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getDirectionValue);
+        break;
+      case 1:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getIntervalValue);
+        break;
+      case 2:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getScaleValue);
+        break;
+      case 3:
+        element.root.querySelector('.mdc-switch__native-control').addEventListener('input', getPopoverValue);
+        break;
+    }
+  });
   
   
   //экземпляры слайдеров
