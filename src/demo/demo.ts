@@ -6,14 +6,28 @@ import {MDCSwitch} from '@material/switch';
 
 $(document).ready(function () {
 
+  function getSwitchValue() {
+    console.log(this.getAttribute('aria-checked'));
+  }
+  
   $('.mdc-text-field').each(function (i, obj) {
     MDCTextField.attachTo(obj);
   });
 
+  const switches = [];
+  
+  /* let switch; */
+
   $('.mdc-switch').each(function (i, obj) {
-    MDCSwitch.attachTo(obj);
+    
+    switches[i] = new MDCSwitch(obj);
+
+    switches[i].root.querySelector('.mdc-switch__native-control').addEventListener('change', getSwitchValue);
+    
+    console.log("🚀 ~ file: demo.ts ~ line 14 ~ switches", switches[i])
   });
 
+  
 
   
   
@@ -69,8 +83,7 @@ $(document).ready(function () {
     });
   }
 
-    
-    
-  }
 
+
+  }
 });
