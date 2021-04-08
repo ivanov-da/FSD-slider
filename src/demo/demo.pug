@@ -1,3 +1,38 @@
+mixin inputNumber(options)
+  .input-number
+    label.mdc-text-field.mdc-text-field--outlined
+      span.mdc-notched-outline
+        span.mdc-notched-outline__leading
+        span.mdc-notched-outline__notch
+          span.mdc-floating-label= options.title
+        span.mdc-notched-outline__trailing
+      input.mdc-text-field__input(type="number")
+
+mixin checkbox(options)
+  .mdc-switch
+    .mdc-switch__track
+    .mdc-switch__thumb-underlay
+      .mdc-switch__thumb
+    label= options.title 
+      input.mdc-switch__native-control(type="checkbox" role="switch")
+
+
+
+mixin panel(options)
+  .panel(id=options.id)
+    +inputNumber({title: 'Min'})
+    +inputNumber({title: 'Max'})
+    +inputNumber({title: 'Step'})
+    +inputNumber({title: 'From'})
+    +inputNumber({title: 'To'})
+    +checkbox({title: 'vertical'})
+    +checkbox({title: 'interval'})
+    +checkbox({title: 'scale'})
+    +checkbox({title: 'popover'})
+    
+    
+
+
 html
   head
     meta(charset='utf-8')
@@ -9,14 +44,46 @@ html
     script(src='./jquery-for-parcel.ts')
     script(src='./demo.ts')
   body
-    .container
-      .slider-demo
-        .slider__container
-          .slider-one
-        .panel
-          label.slider-one__type
-            span Тип слайдера
-            input.slider-one__radio(type='radio' name='sliderOneType' value='horizontal')
-            input.slider-one__radio(type='radio' name='sliderOneType' value='vertical')
+    .page
+      .content 
+        .wrapper
+          +panel({id:'first-panel'})
+          .slider-container
+            .slider-one
+        .wrapper
+          +panel({id:'second-panel'})
+          .slider-container
+            .slider-two
+        .wrapper
+          +panel({id:'third-panel'})
+          .slider-container
+            .slider-three
+        .wrapper
+          +panel({id:'fourth-panel'})
+          .slider-container
+            .slider-four
+      //-
+        .container
+          .slider__container
+            .slider-two
+          .panel
+            +panel({id:'first-panel'})
+      
+        .container
+          .slider__container
+            .slider-three
+          .panel
+            +panel({id:'first-panel'})
+        .container
+          .slider__container
+            .slider-four
+          .panel
+            +panel({id:'first-panel'})
+          //-
+            label.slider-one__type
+              span Тип слайдера
+              input.slider-one__radio(type='radio' name='sliderOneType' value='horizontal')
+              input.slider-one__radio(type='radio' name='sliderOneType' value='vertical')
+
 
 

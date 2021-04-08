@@ -18,7 +18,7 @@ export default class View extends Observer {
     Object.assign(this.state, options);
     
 
-    this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider__vertical';
+    this.sliderClass = this.state.direction === 'horizontal' ? 'fsd-slider' : 'fsd-slider fsd-slider_vertical';
     this.template = '<div class=' + `'${this.sliderClass}'` + '></div>';
     this.root.innerHTML = this.template;
     this.container = this.root.querySelector('.fsd-slider');
@@ -81,8 +81,10 @@ export default class View extends Observer {
     }
 
 
-
-    this.scale.element.addEventListener('click', this.onLineClick.bind(this));
+    if (this.scale) {
+      this.scale.element.addEventListener('click', this.onLineClick.bind(this));
+    }
+    
     this.line.element.addEventListener('click', this.onLineClick.bind(this));
     this.bar.element.addEventListener('click', this.onLineClick.bind(this));
   }
