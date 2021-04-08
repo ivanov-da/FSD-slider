@@ -509,9 +509,20 @@ $(document).ready(function () {
     }
   });
   
+  function syncSliderOne(data) {
+    console.log(data);
+    console.log(sliderOneInputs.inputs[0])
+    sliderOneInputs.inputs[0].value = data.state.min;
+    sliderOneInputs.inputs[1].value = data.state.max;
+    sliderOneInputs.inputs[2].value = data.state.step;
+    sliderOneInputs.inputs[3].value = data.state.valueFrom;
+    sliderOneInputs.inputs[4].value = data.state.valueTo;
+  }
   
   //экземпляры слайдеров
   $('.slider-one').fsdSlider();
+  $('.slider-one').fsdSlider('sync', syncSliderOne);
+
   $('.slider-two').fsdSlider({
         direction: 'vertical', // horizontal or vertical
         type: 'single', // single or double
@@ -563,6 +574,8 @@ $(document).ready(function () {
   }
 
 
+
+  
 
   }
 });

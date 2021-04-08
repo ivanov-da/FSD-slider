@@ -5,6 +5,10 @@ import presenter from './presenter/presenter';
 
 (function ($) {
 
+  let model;
+  let view;
+  let presenter;
+
   let methods = {
     init : function( options ) {
       let settings = $.extend({
@@ -16,12 +20,12 @@ import presenter from './presenter/presenter';
         max: 100,
         valueFrom: -100,
         valueTo: 100,
-        step: 0.5,
+        step: 1,
       }, options);
 
-      let model = new Model();
-      let view = new View(this[0]);
-      let presenter = new Presenter(model, view);
+      model = new Model();
+      view = new View(this[0]);
+      presenter = new Presenter(model, view);
       
       model.init(settings);
       view.init(model.state);
@@ -32,13 +36,13 @@ import presenter from './presenter/presenter';
       console.log(content);
 
     }
+
+    sync: function(syncFunction) {
+      model.addObserver(syncFunction);
+      console.log(model)
+    }
   };
 
-  $.fn.tooltip = function( method ) {
-    
-    // логика вызова метода
-
-  };
 
   $.fn.fsdSlider = function (method) {
     if ( methods[method] ) {
@@ -46,9 +50,7 @@ import presenter from './presenter/presenter';
     } else if ( typeof method === 'object' || ! method ) {
       return methods.init.apply( this, arguments );
     } else {
-      $.error( 'Метод с именем ' +  method + ' не существует для jQuery.tooltip' );
+      $.error( 'Метод с именем ' +  method + ' не существует для jQuery.fsdSlider' );
     } 
-
-    return this.each(make);
   };
 })(jQuery);

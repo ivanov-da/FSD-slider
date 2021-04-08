@@ -20,7 +20,6 @@ export default class Presenter {
   }
 
   updateView(data) {
-    //this.setHandlePosition(property.value);
     this.update(data);
   }
 
