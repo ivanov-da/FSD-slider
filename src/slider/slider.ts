@@ -15,7 +15,7 @@ import presenter from './presenter/presenter';
         direction: 'horizontal', // horizontal or vertical
         type: 'double', // single or double
         popover: true,
-        scale: true,
+        scale: false,
         min: -100,
         max: 100,
         valueFrom: -100,

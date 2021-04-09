@@ -511,12 +511,55 @@ $(document).ready(function () {
   
   function syncSliderOne(data) {
     console.log(data);
-    console.log(sliderOneInputs.inputs[0])
     sliderOneInputs.inputs[0].value = data.state.min;
     sliderOneInputs.inputs[1].value = data.state.max;
     sliderOneInputs.inputs[2].value = data.state.step;
-    sliderOneInputs.inputs[3].value = data.state.valueFrom;
+    sliderOneInputs.inputs[3].value = +data.state.valueFrom;
     sliderOneInputs.inputs[4].value = data.state.valueTo;
+    sliderOneInputs.switches[0].checked = data.state.direction === 'vertical';
+    sliderOneInputs.switches[1].checked = data.state.type;
+    sliderOneInputs.switches[2].checked = data.state.scale;
+    sliderOneInputs.switches[3].checked = data.state.popover;
+    
+  }
+
+  function syncSliderTwo(data) {
+    console.log(data);
+    sliderTwoInputs.inputs[0].value = data.state.min;
+    sliderTwoInputs.inputs[1].value = data.state.max;
+    sliderTwoInputs.inputs[2].value = data.state.step;
+    sliderTwoInputs.inputs[3].value = +data.state.valueFrom;
+    sliderTwoInputs.inputs[4].value = data.state.valueTo;
+    sliderTwoInputs.switches[0].checked = data.state.direction === 'vertical';
+    sliderTwoInputs.switches[1].checked = data.state.type;
+    sliderTwoInputs.switches[2].checked = data.state.scale;
+    sliderTwoInputs.switches[3].checked = data.state.popover;
+  }
+
+  function syncSliderThree(data) {
+    console.log(data);
+    sliderThreeInputs.inputs[0].value = data.state.min;
+    sliderThreeInputs.inputs[1].value = data.state.max;
+    sliderThreeInputs.inputs[2].value = data.state.step;
+    sliderThreeInputs.inputs[3].value = +data.state.valueFrom;
+    sliderThreeInputs.inputs[4].value = data.state.valueTo;
+    sliderThreeInputs.switches[0].checked = data.state.direction === 'vertical';
+    sliderThreeInputs.switches[1].checked = data.state.type;
+    sliderThreeInputs.switches[2].checked = data.state.scale;
+    sliderThreeInputs.switches[3].checked = data.state.popover;
+  }
+
+  function syncSliderFour(data) {
+    console.log(data);
+    sliderFourInputs.inputs[0].value = data.state.min;
+    sliderFourInputs.inputs[1].value = data.state.max;
+    sliderFourInputs.inputs[2].value = data.state.step;
+    sliderFourInputs.inputs[3].value = +data.state.valueFrom;
+    sliderFourInputs.inputs[4].value = data.state.valueTo;
+    sliderFourInputs.switches[0].checked = data.state.direction === 'vertical';
+    sliderFourInputs.switches[1].checked = data.state.type;
+    sliderFourInputs.switches[2].checked = data.state.scale;
+    sliderFourInputs.switches[3].checked = data.state.popover;
   }
   
   //экземпляры слайдеров
@@ -530,10 +573,12 @@ $(document).ready(function () {
         scale: true,
         min: 0,
         max: 1000,
-        valueFrom: 50,
+        valueFrom: null,
         valueTo: 500,
         step: 50,
   });
+  $('.slider-two').fsdSlider('sync', syncSliderTwo);
+
   $('.slider-three').fsdSlider({
         direction: 'vertical', // horizontal or vertical
         type: 'single', // single or double
@@ -545,6 +590,8 @@ $(document).ready(function () {
         valueTo: 9,
         step: 1,
   });
+  $('.slider-three').fsdSlider('sync', syncSliderThree);
+
   $('.slider-four').fsdSlider({
         direction: 'horizontal', // horizontal or vertical
         type: 'single', // single or double
@@ -556,6 +603,7 @@ $(document).ready(function () {
         valueTo: 0,
         step: 0.1,
   });
+  $('.slider-four').fsdSlider('sync', syncSliderFour);
 
 
 
