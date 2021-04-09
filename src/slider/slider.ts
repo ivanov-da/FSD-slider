@@ -38,8 +38,8 @@ import presenter from './presenter/presenter';
     }
 
     sync: function(syncFunction) {
+      syncFunction(model);
       model.addObserver(syncFunction);
-      console.log(model)
     }
   };
 
