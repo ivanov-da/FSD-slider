@@ -235,6 +235,13 @@ export default class View extends Observer {
         }
 
         break;
+      
+      case 'min':
+        if (this.scale) {
+          this.scale.update(data.state.min, data.state.max);
+        }
+
+        break;
     }
   }
 

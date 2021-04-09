@@ -13,12 +13,12 @@ import presenter from './presenter/presenter';
     init : function( options ) {
       let settings = $.extend({
         direction: 'horizontal', // horizontal or vertical
-        type: 'double', // single or double
+        type: 'single', // single or double
         popover: true,
-        scale: false,
-        min: -100,
+        scale: true,
+        min: 0,
         max: 100,
-        valueFrom: -100,
+        valueFrom: 0,
         valueTo: 100,
         step: 1,
       }, options);
@@ -30,10 +30,11 @@ import presenter from './presenter/presenter';
       model.init(settings);
       view.init(model.state);
       presenter.init();
+      
     },
 
     update : function( content ) {
-      console.log(content);
+      model.updateProperty(content)
 
     }
 

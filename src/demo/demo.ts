@@ -14,7 +14,7 @@ $(document).ready(function () {
   function updateSliderOneMinValue() {
     const property = {
       name: 'min',
-      value: this.value
+      value: +this.value
     };
     $('.slider-one').fsdSlider('update', property);
   }
@@ -510,12 +510,12 @@ $(document).ready(function () {
   });
   
   function syncSliderOne(data) {
-    console.log(data);
-    sliderOneInputs.inputs[0].value = data.state.min;
-    sliderOneInputs.inputs[1].value = data.state.max;
-    sliderOneInputs.inputs[2].value = data.state.step;
+    
+    sliderOneInputs.inputs[0].value = +data.state.min;
+    sliderOneInputs.inputs[1].value = +data.state.max;
+    sliderOneInputs.inputs[2].value = +data.state.step;
     sliderOneInputs.inputs[3].value = +data.state.valueFrom;
-    sliderOneInputs.inputs[4].value = data.state.valueTo;
+    sliderOneInputs.inputs[4].value = +data.state.valueTo;
     sliderOneInputs.switches[0].checked = data.state.direction === 'vertical';
     sliderOneInputs.switches[1].checked = data.state.type;
     sliderOneInputs.switches[2].checked = data.state.scale;
@@ -524,7 +524,7 @@ $(document).ready(function () {
   }
 
   function syncSliderTwo(data) {
-    console.log(data);
+    
     sliderTwoInputs.inputs[0].value = data.state.min;
     sliderTwoInputs.inputs[1].value = data.state.max;
     sliderTwoInputs.inputs[2].value = data.state.step;
@@ -537,7 +537,7 @@ $(document).ready(function () {
   }
 
   function syncSliderThree(data) {
-    console.log(data);
+    
     sliderThreeInputs.inputs[0].value = data.state.min;
     sliderThreeInputs.inputs[1].value = data.state.max;
     sliderThreeInputs.inputs[2].value = data.state.step;
@@ -550,7 +550,7 @@ $(document).ready(function () {
   }
 
   function syncSliderFour(data) {
-    console.log(data);
+    
     sliderFourInputs.inputs[0].value = data.state.min;
     sliderFourInputs.inputs[1].value = data.state.max;
     sliderFourInputs.inputs[2].value = data.state.step;
@@ -563,10 +563,20 @@ $(document).ready(function () {
   }
   
   //экземпляры слайдеров
-  $('.slider-one').fsdSlider();
+  $('.slider-one').fsdSlider({
+      direction: 'horizontal', // horizontal or vertical
+      type: 'double', // single or double
+      popover: true,
+      scale: true,
+      min: 0,
+      max: 100,
+      valueFrom: 5,
+      valueTo: 100,
+      step: 1,
+  });
   $('.slider-one').fsdSlider('sync', syncSliderOne);
 
-  $('.slider-two').fsdSlider({
+/*   $('.slider-two').fsdSlider({
         direction: 'vertical', // horizontal or vertical
         type: 'single', // single or double
         popover: true,
@@ -576,8 +586,8 @@ $(document).ready(function () {
         valueFrom: null,
         valueTo: 500,
         step: 50,
-  });
-  $('.slider-two').fsdSlider('sync', syncSliderTwo);
+  }); */
+  /* $('.slider-two').fsdSlider('sync', syncSliderTwo);
 
   $('.slider-three').fsdSlider({
         direction: 'vertical', // horizontal or vertical
@@ -604,26 +614,5 @@ $(document).ready(function () {
         step: 0.1,
   });
   $('.slider-four').fsdSlider('sync', syncSliderFour);
-
-
-
-  let sliderOneType = document.getElementsByName('sliderOneType');
-
-  //тест передачи данных в слайдер
-  for (let radio of sliderOneType) {
-    radio.addEventListener('click', (event) => {
-      const property= {
-        name: 'type',
-        value: event.target.value,
-      }
-      
-      $('.slider-one').fsdSlider('update', property);
-    });
-  }
-
-
-
-  
-
-  }
+ */
 });

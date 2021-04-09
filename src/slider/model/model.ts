@@ -57,11 +57,19 @@ export default class Model extends Observer{
         this.state[property.name] = updatedValue;  
         break;
 
+      case 'min':
+        
+        updatedProperty = 'min';
+        updatedValue = this.validMin(property.value);
+        this.state[property.name] = updatedValue;
+        break;
+
       default:
         /* this.state[property.name] = this.calcValue(property.value); */
         break;
     }
     
+    console.log(this.state)
     this.notifyObservers({
       name: updatedProperty,
       state: this.state,
@@ -109,13 +117,7 @@ export default class Model extends Observer{
     }
   }
 
-  validMin(min) {
-    if (typeof min === 'number' || min >= this.state.max) {
-      return min;
-    } else {
-      return this.state.min;
-    }
-  }
+
 
   validMax(max) {
     if (typeof max === 'number' || max <= this.state.min) {
@@ -124,6 +126,30 @@ export default class Model extends Observer{
       return this.state.max;
     }
   } */
+
+  validMin(min) {
+
+    let minValue = min;
+    
+    if (this.state.type === 'single') {
+
+      if (typeof minValue !== 'number' || minValue > this.state.valueTo || minValue > this.state.max - 2 * this.state.step) {
+        return this.state.min;
+      } else {
+        return minValue;
+      }
+
+    } else {
+
+      if (typeof minValue !== 'number' || minValue > this.state.valueFrom) {
+        return this.state.min;
+      } else {
+        return minValue;
+      }
+
+    }
+
+  }
 
 
   validValueTo(valueTo) {

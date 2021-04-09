@@ -20,6 +20,7 @@ export default class Presenter {
   }
 
   updateView(data) {
+    console.log("🚀 ~ file: presenter.ts ~ line 23 ~ Presenter ~ updateView ~ data", data)
     this.update(data);
   }
 

@@ -45,6 +45,19 @@ export default class ViewScale {
 
   }
 
+  update(min, max) {
+    let step = (max - min) / 4;
+    let numbers = this.element.querySelectorAll('.fsd-slider__scale-number');
+    
+    for (let i = 0; i<=4; i+=1) {
+      
+        i == 0 
+          ? numbers[i].innerHTML = min
+          : numbers[i].innerHTML = min + i * step;
+      }
+    
+  }
+
   getWidth() {
     return this.element.getBoundingClientRect().width;
   }
