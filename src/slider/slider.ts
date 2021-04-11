@@ -33,7 +33,8 @@ import presenter from './presenter/presenter';
       
     },
 
-    update : function( content ) {
+    update : function(content) {
+    console.log("🚀 ~ file: slider.ts ~ line 37 ~ content", content)
       model.updateProperty(content)
 
     }

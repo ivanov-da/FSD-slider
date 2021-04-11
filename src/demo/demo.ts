@@ -203,7 +203,7 @@ $(document).ready(function () {
     $('.slider-four').fsdSlider('update', property);
   }
 
-  function +updateSliderOneIntervalValue() {
+  function updateSliderOneIntervalValue() {
     const property = {
       name: 'type',
       value: this.getAttribute('aria-checked')

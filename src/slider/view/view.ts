@@ -201,6 +201,14 @@ export default class View extends Observer {
         this.updateHandle(data, 'handle');
 
         break;
+
+      case 'max':
+        if (this.scale) {
+          this.scale.update(data.state.min, data.state.max);
+        }
+        this.updateHandle(data, 'handleFrom');
+        this.updateHandle(data, 'handle');
+        break;
     }
   }
 
