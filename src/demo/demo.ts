@@ -22,7 +22,7 @@ $(document).ready(function () {
   function updateSliderTwoMinValue() {
     const property = {
       name: 'min',
-      value: this.value
+      value: +this.value
     };
     $('.slider-two').fsdSlider('update', property);
   }
@@ -30,7 +30,7 @@ $(document).ready(function () {
   function updateSliderThreeMinValue() {
     const property = {
       name: 'min',
-      value: this.value
+      value: +this.value
     };
     $('.slider-three').fsdSlider('update', property);
   }
@@ -38,7 +38,7 @@ $(document).ready(function () {
   function updateSliderFourMinValue() {
     const property = {
       name: 'min',
-      value: this.value
+      value: +this.value
     };
     $('.slider-four').fsdSlider('update', property);
   }
@@ -46,7 +46,7 @@ $(document).ready(function () {
   function updateSliderOneMaxValue() {
     const property = {
       name: 'max',
-      value: this.value
+      value: +this.value
     };
     $('.slider-one').fsdSlider('update', property);
   }
@@ -54,7 +54,7 @@ $(document).ready(function () {
   function updateSliderTwoMaxValue() {
     const property = {
       name: 'max',
-      value: this.value
+      value: +this.value
     };
     $('.slider-two').fsdSlider('update', property);
   }
@@ -62,7 +62,7 @@ $(document).ready(function () {
   function updateSliderThreeMaxValue() {
     const property = {
       name: 'max',
-      value: this.value
+      value: +this.value
     };
     $('.slider-three').fsdSlider('update', property);
   }
@@ -70,7 +70,7 @@ $(document).ready(function () {
   function updateSliderFourMaxValue() {
     const property = {
       name: 'max',
-      value: this.value
+      value: +this.value
     };
     $('.slider-four').fsdSlider('update', property);
   }
@@ -78,7 +78,7 @@ $(document).ready(function () {
   function updateSliderOneStepValue() {
     const property = {
       name: 'step',
-      value: this.value
+      value: +this.value
     };
     $('.slider-one').fsdSlider('update', property);
   }
@@ -86,7 +86,7 @@ $(document).ready(function () {
   function updateSliderTwoStepValue() {
     const property = {
       name: 'step',
-      value: this.value
+      value: +this.value
     };
     $('.slider-two').fsdSlider('update', property);
   }
@@ -94,7 +94,7 @@ $(document).ready(function () {
   function updateSliderThreeStepValue() {
     const property = {
       name: 'step',
-      value: this.value
+      value: +this.value
     };
     $('.slider-three').fsdSlider('update', property);
   }
@@ -102,7 +102,7 @@ $(document).ready(function () {
   function updateSliderFourStepValue() {
     const property = {
       name: 'step',
-      value: this.value
+      value: +this.value
     };
     $('.slider-four').fsdSlider('update', property);
   }
@@ -110,7 +110,7 @@ $(document).ready(function () {
   function updateSliderOneFromValue() {
     const property = {
       name: 'valueFrom',
-      value: this.value
+      value: +this.value
     };
     $('.slider-one').fsdSlider('update', property);
   }
@@ -118,7 +118,7 @@ $(document).ready(function () {
   function updateSliderTwoFromValue() {
     const property = {
       name: 'valueFrom',
-      value: this.value
+      value: +this.value
     };
     $('.slider-two').fsdSlider('update', property);
   }
@@ -126,7 +126,7 @@ $(document).ready(function () {
   function updateSliderThreeFromValue() {
     const property = {
       name: 'valueFrom',
-      value: this.value
+      value: +this.value
     };
     $('.slider-three').fsdSlider('update', property);
   }
@@ -134,7 +134,7 @@ $(document).ready(function () {
   function updateSliderFourFromValue() {
     const property = {
       name: 'valueFrom',
-      value: this.value
+      value: +this.value
     };
     $('.slider-four').fsdSlider('update', property);
   }
@@ -142,7 +142,7 @@ $(document).ready(function () {
   function updateSliderOneToValue() {
     const property = {
       name: 'valueTo',
-      value: this.value
+      value: +this.value
     };
     $('.slider-one').fsdSlider('update', property);
   }
@@ -150,7 +150,7 @@ $(document).ready(function () {
   function updateSliderTwoToValue() {
     const property = {
       name: 'valueTo',
-      value: this.value
+      value: +this.value
     };
     $('.slider-two').fsdSlider('update', property);
   }
@@ -158,7 +158,7 @@ $(document).ready(function () {
   function updateSliderThreeToValue() {
     const property = {
       name: 'valueTo',
-      value: this.value
+      value: +this.value
     };
     $('.slider-three').fsdSlider('update', property);
   }
@@ -166,7 +166,7 @@ $(document).ready(function () {
   function updateSliderFourToValue() {
     const property = {
       name: 'valueTo',
-      value: this.value
+      value: +this.value
     };
     $('.slider-four').fsdSlider('update', property);
   }
@@ -203,7 +203,7 @@ $(document).ready(function () {
     $('.slider-four').fsdSlider('update', property);
   }
 
-  function updateSliderOneIntervalValue() {
+  function +updateSliderOneIntervalValue() {
     const property = {
       name: 'type',
       value: this.getAttribute('aria-checked')
