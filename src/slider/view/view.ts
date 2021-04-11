@@ -186,62 +186,63 @@ export default class View extends Observer {
     
     switch (data.name) {
       case 'valueTo':
-        
-        let position = this.getValueRelative(data.state.valueTo, data.state.min, data.state.max);
-
-        if (position < 0) {
-          position = 0;
-        }
-        if (position > 1) {
-          position = 1;
-        }
-        
-        this.handle.setPosition(position);
-
-        this.state.type === 'single'
-          ? this.bar.update(null, this.handle.element)
-          : this.bar.update(this.handleFrom.element, this.handle.element);
-
-        if (this.handlePopover) {
-          this.handlePopover.update(position, data.state.valueTo);
-
-          if (this.handlesCommonPopover) {
-            this.handlesCommonPopover.updateCommon(this.calcPositionCommonPopover(), data.state.valueFrom,data.state.valueTo);
-            this.setPopoversVisibility();
-          }
-        }
-        
+        this.updateHandle(data, 'handle');
         break;
 
       case 'valueFrom':
-
-        let position = this.getValueRelative(data.state.valueFrom, data.state.min, data.state.max);
-
-        if (position < 0) {
-          position = 0;
-        }
-        if (position > 1) {
-          position = 1;
-        }
-        
-        this.handleFrom.setPosition(position);
-
-        this.bar.update(this.handleFrom.element, this.handle.element);
-
-        if (this.handleFromPopover) {
-          this.handleFromPopover.update(position, data.state.valueFrom);
-          this.handlesCommonPopover.updateCommon(this.calcPositionCommonPopover(), data.state.valueFrom,data.state.valueTo);
-          this.setPopoversVisibility()
-        }
-
+        this.updateHandle(data, 'handleFrom');
         break;
       
       case 'min':
         if (this.scale) {
           this.scale.update(data.state.min, data.state.max);
         }
+        this.updateHandle(data, 'handleFrom');
+        this.updateHandle(data, 'handle');
 
         break;
+    }
+  }
+
+  updateHandle(data, handle) {
+    let position
+
+    handle === 'handle'
+      ? position = this.getValueRelative(data.state.valueTo, data.state.min, data.state.max)
+      : position = this.getValueRelative(data.state.valueFrom, data.state.min, data.state.max);
+
+    if (position < 0) {
+      position = 0;
+    }
+    if (position > 1) {
+      position = 1;
+    }
+
+    this[handle].setPosition(position);
+
+    this.state.type === 'single'
+      ? this.bar.update(null, this.handle.element)
+      : this.bar.update(this.handleFrom.element, this.handle.element);
+
+    if (handle === 'handle') {
+
+      if (this.handlePopover) {
+        this.handlePopover.update(position, data.state.valueTo);
+
+        if (this.handlesCommonPopover) {
+          this.handlesCommonPopover.updateCommon(this.calcPositionCommonPopover(), data.state.valueFrom,data.state.valueTo);
+          this.setPopoversVisibility();
+        }
+      }
+
+    } else if (handle === 'handleFrom') {
+
+      if (this.handleFromPopover) {
+        this.handleFromPopover.update(position, data.state.valueFrom);
+        this.handlesCommonPopover.updateCommon(this.calcPositionCommonPopover(), data.state.valueFrom,data.state.valueTo);
+        this.setPopoversVisibility()
+      }
+
     }
   }
 
